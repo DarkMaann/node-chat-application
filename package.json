@@ -1,0 +1,23 @@
+{
+  "name": "chatapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "wp": "webpack -w",
+    "debug": "webpack -w & nodemon --inspect ./bin/www",
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "ejs": "~2.5.6",
+    "express": "~4.15.2",
+    "morgan": "~1.8.1",
+    "serve-favicon": "~2.4.2",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "webpack": "^3.8.1"
+  }
+}

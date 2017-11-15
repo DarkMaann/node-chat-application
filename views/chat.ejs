@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat room</title>
+    <script src='http://localhost:4000/socket.io/socket.io.js'></script>
+    <script src='/javascripts/chatClientBundle.js'></script>
+    <link rel='stylesheet' href='/stylesheets/chat.css' />
+  </head>
+  <body>
+    <p>Hello <%= name %></p>
+    <div id='chatSpace'>
+    </div>
+    <br>
+    <input type='text' name='msg' id='messageSpace' placeholder='Say something...'>
+  </body>
+</html>
+
