@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "wp": "webpack -w",
+    "wp": "webpack",
     "debug": "webpack -w & nodemon --inspect ./bin/www",
     "start": "nodemon ./bin/www"
   },
@@ -18,6 +18,12 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "webpack": "^3.8.1"
   }
 }
