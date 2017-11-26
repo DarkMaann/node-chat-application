@@ -26,6 +26,12 @@
             "error",
             "always"
         ],
-        "no-trailing-spaces":"error"
+        "no-trailing-spaces":[
+            "error", {
+                "skipBlankLines": true, 
+                "ignoreComments": true
+            }
+        ],
+        "no-unused-vars":"off"
     }
 }

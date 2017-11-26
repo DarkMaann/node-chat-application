@@ -71,24 +71,24 @@ var creator = __webpack_require__(1);
 
 window.onload = () => {
 
-    var socket = io('http://localhost:4000');
-    var chatSpace = document.getElementById('chatSpace');
-    var messageSpace = document.getElementById('messageSpace');
+	var socket = io('http://localhost:4000');
+	var chatSpace = document.getElementById('chatSpace');
+	var messageSpace = document.getElementById('messageSpace');
 
-    socket.on('serverMsg', (data) => {
-        let newEl = creator.createHTML('p', chatSpace, data.msg);
-        creator.appendAttr(newEl, 'class', 'msgRight');
-        chatSpace.scrollTop = chatSpace.scrollHeight;
-    })
+	socket.on('serverMsg', (data) => {
+		let newEl = creator.createHTML('p', chatSpace, data.msg);
+		creator.appendAttr(newEl, 'class', 'msgRight');
+		chatSpace.scrollTop = chatSpace.scrollHeight;
+	});
 
-    document.addEventListener('keypress', (event) => {
-        if (event.charCode == 13 && messageSpace.value != ''){
-            socket.emit('clientMsg', {msg: messageSpace.value});
-            messageSpace.value = '';
-        }
-    })
+	document.addEventListener('keypress', (event) => {
+		if (event.charCode == 13 && messageSpace.value != ''){
+			socket.emit('clientMsg', {msg: messageSpace.value});
+			messageSpace.value = '';
+		}
+	});
 
-}
+};
 
 
 
@@ -98,22 +98,22 @@ window.onload = () => {
 
 module.exports = {
     
-    createHTML (newEl,parEl,txt) {
-        var newEl = document.createElement(newEl);
-        var txtNode = document.createTextNode(txt);
-        newEl.appendChild(txtNode);
-        parEl.appendChild(newEl);
+	createHTML (newElem,parentElem,txt) {
+		var newEl = document.createElement(newElem);
+		var txtNode = document.createTextNode(txt);
+		newEl.appendChild(txtNode);
+		parentElem.appendChild(newEl);
 
-        return newEl;
-    },
+		return newEl;
+	},
 
-    appendAttr (el,attrName,attrVal) {
-        var attrName = document.createAttribute(attrName);
-        attrName.value = attrVal;
-        el.setAttributeNode(attrName);
-    }
+	appendAttr (el,attrName,attrVal) {
+		var attributeName = document.createAttribute(attrName);
+		attributeName.value = attrVal;
+		el.setAttributeNode(attributeName);
+	}
 
-}
+};
 
 
 /***/ })
