@@ -7,13 +7,13 @@ window.onload = function () {
 
 	xmlhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
-			console.log(xmlhttp.responseText);
+			location.replace(xmlhttp.responseText);
 		}
 	};
 	
-	btn.addEventListener ('click', () => {
+	btn.addEventListener ('click', function () {
 		
-		xmlhttp.open ('POST', '/');
+		xmlhttp.open ('POST', '/login');
 		xmlhttp.setRequestHeader('Authorization','Basic ' + btoa(name.value + ':' + pass.value));
 		xmlhttp.send ();
 

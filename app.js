@@ -9,6 +9,7 @@ var ioParser = require('./io');
 
 var index = require('./routes/index');
 var chat = require('./routes/chat');
+var login = require('./routes/login');
 
 var app = express();
 var server = http.createServer(app);
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/chat', chat);
+app.use('/login', login);
 ioParser(io);
 
 // catch 404 and forward to error handler
