@@ -15,7 +15,7 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
-// start listening for socket.io traffic
+// start listening for websocket traffic
 server.listen(4000);
 
 // view engine setup
@@ -32,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/chat', chat);
 app.use('/login', login);
+
+// pas io object to imported ./io.js module
 ioParser(io);
 
 // catch 404 and forward to error handler
@@ -43,6 +45,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
