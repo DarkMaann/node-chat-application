@@ -1,11 +1,13 @@
 var socket = require('socket.io-client')('http://localhost:4000'); // get the socket object
-var creator = require('./createHtml'); // get the
+var creator = require('./createHtml'); // get the html creation library
 
 
 window.onload = () => {
 
-	var chatSpace = document.getElementById('chatSpace');
-	var messageSpace = document.getElementById('messageSpace');
+	let chatSpace = document.getElementById('chatSpace');
+	let messageSpace = document.getElementById('messageSpace');
+	let btn = document.getElementById('btn');
+
 
 	// start listening for server messages
 	socket.on('serverMsg', (data) => {
@@ -27,6 +29,11 @@ window.onload = () => {
 
 	});
 
-	
+	// click listener for sending request to /logout page
+	btn.addEventListener('click', function() {
+		location.replace('http://192.168.8.101:3000/logout');
+	});
+
+
 };
 

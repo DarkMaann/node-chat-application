@@ -3,7 +3,15 @@ var router = express.Router();
 
 // handle the get request to /chat and send the chat page to the user
 router.get('/', function(req, res, next) {
-	res.render('chat', {name: 'User'});
+	
+	// check if the user that manually entered /chat in the url bar is authorized or not, if not send him to home page
+	if (req.session.name) {
+		res.render('chat', {name: req.session.name});
+	} else {
+		res.redirect('./');
+	}
+
+
 });
 
 

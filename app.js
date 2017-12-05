@@ -5,11 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
-var ioParser = require('./io');
+var ioParser = require('./public/javascripts/io');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 var chat = require('./routes/chat');
 var login = require('./routes/login');
+var logout = require('./routes/logout');
 
 var app = express();
 var server = http.createServer(app);
@@ -28,12 +31,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+	name: 'kolacicSesije',
+	secret: 'KolkoSiDobar',
+	cookie: {maxAge: 3600000},
+	resave: false,
+	saveUninitialized: false,
+	unset: 'destroy',
+	store: new MongoStore({
+		url: 'mongodb://localhost:27017/Sessions'
+	})
+}));
 
 app.use('/', index);
-app.use('/chat', chat);
 app.use('/login', login);
+app.use('/chat', chat);
+app.use('/logout', logout);
 
-// pas io object to imported ./io.js module
+// pass io object to imported ./io.js module
 ioParser(io);
 
 // catch 404 and forward to error handler
