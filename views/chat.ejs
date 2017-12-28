@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Chat room</title>
-    <script src='/javascripts/chatClientBundle.js'></script>
-    <link rel='stylesheet' href='/stylesheets/chat.css' />
-  </head>
-  <body>
-	<p>Hello <%= name %></p>
-	<button id='btn'>Log out</button>
-    <div id='chatSpace'>
-    </div>
-    <br>
-    <input type='text' name='msg' id='messageSpace' placeholder='Say something...'>
-  </body>
-</html>
 
+<head>
+	<title>Chat room</title>
+	<script src='/javascripts/chatClientBundle.js'></script>
+	<link rel='stylesheet' href='/stylesheets/chat.css' />
+</head>
+
+<body>
+	<header id='header'>
+		<p>Hello <span id='yourName'><%= name %></span></p>
+		<button id='btn'>Log out</button>
+	</header>
+	<div id='main'>
+		<div id='chatSpace'>
+		</div>
+		<br>
+		<input type='text' name='msg' id='messageSpace' placeholder='Say something...'>
+	</div>
+	<footer id='footer'>
+		<p>Peer to peer chats go here!</p>
+	</footer>
+</body>
+
+</html>

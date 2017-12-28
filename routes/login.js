@@ -18,12 +18,18 @@ mongoose.connect(connStr, {useMongoClient: true}, function(err) {
 // handle the post request to /login sending appropriate url string
 router.get('/', function(req, res, next) {
 
-	// get the header and split the base64 part of the header
+	// check if user is accessing this page through homePage or manually, and if he/she has entered credentials
+	if (!req.session.homePage || typeof req.header('Authorization') == 'undefined') return res.redirect('/');
+	req.session.homePage = false; //reset homePage boolean for the next time
+
+	// get the header and split the base64 (username and password) part of the header
 	let credentialsBase64 = req.header('Authorization').split(' ')[1];
 	
 	// create node buffer brom base64 string, convert it to text format and split name and password
 	let credentialsAscii = Buffer.from(credentialsBase64, 'base64').toString().split(':');
 	
+	if (!credentialsAscii[0] || !credentialsAscii[1]) return res.status(401).send('You must enter both username and password.');
+
 	let potentialUser = new userModel({
 		username: credentialsAscii[0],
 		password: credentialsAscii[1]

@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 	if (req.session.name) {
 		res.render('chat', {name: req.session.name});
 	} else {
-		res.redirect('./');
+		res.redirect('/');
 	}
 
 

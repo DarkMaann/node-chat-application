@@ -3344,7 +3344,7 @@ module.exports = function(obj, fn){
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var socket = __webpack_require__(22)('http://localhost:4000'); // get the socket object
+var socket = __webpack_require__(22)('http://192.168.8.101:4000'); // get the socket object and connect to server
 var creator = __webpack_require__(44); // get the html creation library
 
 
@@ -3353,13 +3353,14 @@ window.onload = () => {
 	let chatSpace = document.getElementById('chatSpace');
 	let messageSpace = document.getElementById('messageSpace');
 	let btn = document.getElementById('btn');
-
+	let yourName = document.getElementById('yourName').innerHTML;
 
 	// start listening for server messages
 	socket.on('serverMsg', (data) => {
-		
-		let newEl = creator.createHTML('p', chatSpace, data.msg);
-		creator.appendAttr(newEl, 'class', 'msgRight');
+		let renderedMsg = (data.name == yourName ? 'You said' : data.name + ' said') + ': ' + data.msg;
+		let leftOrRight = data.name == yourName ? 'msgRight' : 'msgLeft';
+		let newEl = creator.createHTML('p', chatSpace, renderedMsg);
+		creator.appendAttr(newEl, 'class', leftOrRight);
 		chatSpace.scrollTop = chatSpace.scrollHeight; // set automatic scrolldown of the scrollbar
 
 	});
@@ -3369,7 +3370,7 @@ window.onload = () => {
 
 		// send message if enter was pressed and message box isn't empty
 		if (event.charCode == 13 && messageSpace.value != ''){
-			socket.emit('clientMsg', {msg: messageSpace.value});
+			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
 			messageSpace.value = '';
 		}
 

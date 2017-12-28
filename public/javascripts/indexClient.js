@@ -11,9 +11,10 @@ window.onload = function () {
 	// add listener for change in ajax object
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4) {
+			// change to home page or main page, depending on validity of credentials
 			if (this.status == 200) {
 				location.replace(xmlhttp.responseText);
-			} // change to home page or main page, depending on validity of credentials
+			}
 			if (this.status == 401) {
 				pass.value = '';
 				msg.innerHTML = xmlhttp.responseText;

@@ -1,54 +1,94 @@
 body {
-    position: absolute;
-    height: 98%;
-    width: 98%;
-    background-color: gray
+  position: absolute;
+  padding: 0;
+  height: 98%;
+  width: 98%;
+  background-color: gray;
 }
-
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  height: 78%;
+  width: 100%;
+}
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#header p span {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
+  font-weight: bold;
+}
+#footer {
+  clear: both;
+}
 #chatSpace {
-    position: relative;
-    width: 30%;
-    height: 50%;
-    background-color: white;
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
-    padding: 5px;
-    overflow-x:hidden;
-    overflow-y:visible
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
+  width: 50%;
+  height: 70%;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
-
 #messageSpace {
-    position: absolute;
-    width: 30%;
-    height: 3%;
-    background-color: khaki;
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
-    text-align: right;
-    padding: 5px
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
+  width: 50%;
+  height: 3%;
+  background-color: khaki;
+  text-align: right;
 }
-
+.msg {
+  position: relative;
+  width: 60%;
+  padding: 5px;
+  clear: both;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+/* mixins */
+.box {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
+}
 .msgLeft {
-    position: relative;
-    width: 60%;
-    background-color: blue;
-    color: white;
-    text-align: justify;
-    padding: 5px;
-    float: left;
-    clear: both;
-    overflow-wrap: break-word
+  position: relative;
+  width: 60%;
+  padding: 5px;
+  clear: both;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  float: left;
+  text-align: left;
+  background-color: blue;
+  color: white;
 }
-
 .msgRight {
-    position: relative;
-    width: 60%;
-    background-color: limegreen;
-    text-align: justify;
-    padding: 5px;
-    float: right;
-    clear: both;
-    overflow-wrap: break-word
+  position: relative;
+  width: 60%;
+  padding: 5px;
+  clear: both;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  float: right;
+  text-align: right;
+  background-color: limegreen;
+  color: black;
 }

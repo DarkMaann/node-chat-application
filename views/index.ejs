@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <script src='/javascripts/indexClient.js'></script>
-    <link rel='stylesheet' href='/stylesheets/index.css' />
-  </head>
-  <body>
 
+<head>
+	<title>
+		<%= title %>
+	</title>
+	<script src='/javascripts/indexClient.js'></script>
+	<link rel='stylesheet' href='/stylesheets/index.css' />
+</head>
+
+<body>
 	<h1><%= title %></h1>
-	
-    User name:<input type="text" name="name" id="name"><br>
-	Password:<input type="password" name="password" id="password"><br>
-	
-	<button id="button">Log in</button><br><br>
 
-	<p id='message'><%= message %></p>
-  </body>
+	User name:
+	<input type="text" name="name" id="name">
+	<br> Password:
+	<input type="password" name="password" id="password">
+	<br>
+
+	<button id="button">Log in</button>
+	<br>
+	<br>
+
+	<p id='message'>
+		<%= message %>
+	</p>
+</body>
+
 </html>

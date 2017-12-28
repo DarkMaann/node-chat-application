@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 	req.session.destroy(function(err) {
 		if (err) console.log('Session was not successfully destroyed');
 	});
-	res.redirect('./');
+	res.redirect('/');
 
 });
 
