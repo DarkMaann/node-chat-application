@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		<%= title %>
+	</title>
+	<script src='/javascripts/signinClient.js'></script>
+	<link rel='stylesheet' href='/stylesheets/signin.css' />
+</head>
+
+<body>
+	<div id='formSignIn'>
+		<h1><%= instruction %></h1>
+		<form action='http://192.168.0.16:3000/signin' method='POST' id='signinForm'>
+			<label for='name'>Name:</label>
+			<input type='text' name='name' id='name'>
+			<br>
+			<label for='password'>Password:</label>
+			<input type='password' name='password' id='password'>
+			<br>
+			<label for='password2'>Repeat password:</label>
+			<input type='password' name='password2' id='password2'>
+			<br>
+			<label for='image'>Upload your picture:</label>
+			<input type='file' name='image' id='image' accept='.jpg, .jpeg, .png'>
+			<br>
+			<label for='email'>Email:</label>
+			<input type='email' name='email' id='email' placeholder='name@example.com'>
+			<br>
+			<fieldset>
+				<legend>Gender:</legend>
+				<label for='male'>male</label>
+				<input type="radio" name='gender' id='male'>
+				<label for='female'>female</label>
+				<input type="radio" name='gender' id='female'>
+			</fieldset>
+			<br>
+			<label for='date'>Date of birth:</label>
+			<input type='date' name='date' id='date' value='2000-01-01' min='1920-01-01' max='2000-01-01'>
+			<br><br><br>
+			<input type='submit' name='submit' id='submit' value='Submit'>
+		</form>
+	</div>
+</body>
+
+</html>

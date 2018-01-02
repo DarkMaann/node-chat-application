@@ -2,7 +2,8 @@
 window.onload = function () {
 
 
-	let btn = document.getElementById('button');
+	let logInButton = document.getElementById('logInButton');
+	let signInButton = document.getElementById('signInButton');
 	let name = document.getElementById('name');
 	let pass = document.getElementById('password');
 	let msg = document.getElementById('message');
@@ -23,14 +24,20 @@ window.onload = function () {
 	};
 	
 
-	btn.addEventListener ('click', function() {
+	logInButton.addEventListener('click', function() {
 		
-		// make a post request to /routes/login.js, sending credentials from input elements
+		// make a get request to /routes/login.js, sending credentials from input elements
 		xmlhttp.open('GET', 'http://192.168.8.101:3000/login');
 		xmlhttp.setRequestHeader('Authorization','Basic ' + btoa(name.value + ':' + pass.value));
 		xmlhttp.send();
 
 	});
 
+	signInButton.addEventListener('click', function() {
+
+		// make a get request to /routes/signin.js to get a form for signing in
+		location.replace('http://192.168.8.101:3000/signin');
+
+	});
 
 };

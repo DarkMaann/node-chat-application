@@ -8,9 +8,9 @@ body {
 
 #main {
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-end;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: stretch;
 	height: 78%;
     width: 100%;
 }
@@ -29,21 +29,43 @@ body {
 	clear: both;
 }
 
+#chatDiv {
+	.box();
+	display: flex;
+	flex-direction: column;
+	//flex-grow: 1;
+	flex-basis: 50%;
+	//width: 50%;
+	//height: 75%;
+
+}
+
 #chatSpace {
 	.box();
-    width: 50%;
-    height: 70%;
+	flex-grow: 1;
     background-color: white;
     overflow-x:hidden;
-    overflow-y:visible
+    overflow-y:visible;
 }
 
 #messageSpace {
 	.box();
-    width: 50%;
-    height: 3%;
+	//height: 6%;
     background-color: khaki;
     text-align: right;
+}
+
+#usersDiv {
+	.box(2px,0px);
+	display: flex;
+	flex-direction: column;
+	flex-basis:10%;
+	border-left-width: 0;
+}
+
+.users{
+	.box(0px;0px;2px);
+	text-align: center;
 }
 
 .msg {
@@ -57,12 +79,12 @@ body {
 
 /* mixins */
 
-.box {
+.box(@width:2px;@padding:5px;@margin:0px) {
 	border-style: solid;
-    border-width: 2px;
+    border-width: @width;
 	border-color: black;
-	padding: 5px;
-	margin: 0px;
+	padding: @padding;
+	margin: @margin;
 }
 
 .float(@float; @backcolor; @color:black) {

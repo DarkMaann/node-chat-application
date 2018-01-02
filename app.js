@@ -13,6 +13,7 @@ var index = require('./routes/index');
 var chat = require('./routes/chat');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var signin = require('./routes/signin');
 
 var app = express();
 var server = http.createServer(app);
@@ -47,6 +48,7 @@ app.use('/', index);
 app.use('/login', login);
 app.use('/chat', chat);
 app.use('/logout', logout);
+app.use('/signin', signin);
 
 // pass io object to imported ./io.js module
 ioParser(io);
