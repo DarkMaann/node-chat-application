@@ -14,24 +14,25 @@
 		<h1><%= instruction %></h1>
 		<form action='http://192.168.0.16:3000/signin' method='POST' id='signinForm'>
 			<label for='name'>Name:</label>
-			<input type='text' name='name' id='name'>
+			<input type='text' name='name' id='name' required autofocus>
 			<br>
 			<label for='password'>Password:</label>
-			<input type='password' name='password' id='password'>
+			<input type='password' name='password' id='password' required>
 			<br>
 			<label for='password2'>Repeat password:</label>
-			<input type='password' name='password2' id='password2'>
+			<input type='password' name='password2' id='password2' required>
 			<br>
-			<label for='image'>Upload your picture:</label>
-			<input type='file' name='image' id='image' accept='.jpg, .jpeg, .png'>
+			<label for='image'>Picture:<dev id='imagePreview'></dev></label>
+			<input type='file' name='image' id='image' accept='.jpg, .jpeg, .png' required>
+			<a href='#' id='imageLink'>Upload your profile picture</a>
 			<br>
 			<label for='email'>Email:</label>
-			<input type='email' name='email' id='email' placeholder='name@example.com'>
+			<input type='email' name='email' id='email' placeholder='name@example.com' required>
 			<br>
 			<fieldset>
 				<legend>Gender:</legend>
 				<label for='male'>male</label>
-				<input type="radio" name='gender' id='male'>
+				<input type="radio" name='gender' id='male' checked>
 				<label for='female'>female</label>
 				<input type="radio" name='gender' id='female'>
 			</fieldset>
