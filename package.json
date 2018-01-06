@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-	"wp": "webpack",
-	"predebug": "for file in ./public/stylesheets/*.less; do lessc $file `echo $file | sed -e 's/less/css/'`; done",
+    "wp": "webpack",
+    "predebug": "for file in ./public/stylesheets/*.less; do lessc $file `echo $file | sed -e 's/less/css/'`; done",
     "debug": "webpack -w & nodemon --inspect ./bin/www",
     "start": "nodemon ./bin/www"
   },

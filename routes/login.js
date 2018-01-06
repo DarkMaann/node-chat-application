@@ -46,7 +46,7 @@ router.get('/', function(req, res, next) {
 				if (err) throw err;
 				if (isMatch) {
 					req.session.name = potentialUser.username;
-					res.status(200).send('http://192.168.8.101:3000/chat');
+					res.status(200).send('http://192.168.0.16:3000/chat');
 				} else {
 					res.status(401).send('You entered the wrong password.');
 				}
@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
 				if (err) throw err;
 				req.session.name = potentialUser.username;
 				// send the chat page to the new user....for now
-				res.status(200).send('http://192.168.8.101:3000/chat');
+				res.status(200).send('http://192.168.0.16:3000/chat');
 			});
 
 		}

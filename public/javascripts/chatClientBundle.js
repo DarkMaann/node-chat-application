@@ -3344,7 +3344,7 @@ module.exports = function(obj, fn){
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var socket = __webpack_require__(22)('http://192.168.8.101:4000'); // get the socket object and connect to server
+var socket = __webpack_require__(22)('http://192.168.0.16:4000'); // get the socket object and connect to server
 var creator = __webpack_require__(44); // get the html creation library
 
 
@@ -3378,7 +3378,7 @@ window.onload = () => {
 
 	// click listener for sending request to /logout page
 	btn.addEventListener('click', function() {
-		location.replace('http://192.168.8.101:3000/logout');
+		location.replace('http://192.168.0.16:3000/logout');
 	});
 
 
