@@ -8,7 +8,8 @@ router.get('/', function(req, res, next) {
 	if (!req.session.name) {
 		res.render('signin', {
 			title: 'Sign In',
-			instruction: 'Please fill the given form'
+			instruction: 'Please fill the given form',
+			message: ''
 		});
 	} else {
 		res.redirect('/chat');
