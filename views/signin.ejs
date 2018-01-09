@@ -12,9 +12,10 @@
 <body>
 	<div id='formSignIn'>
 		<h1><%= instruction %></h1>
-		<form action='http://192.168.0.16:3000/signin' method='POST' id='signinForm'>
-			<label for='name'>Name:</label>
-			<input type='text' name='name' id='name' required autofocus>
+		<p id='message'><%= message %></p>
+		<form action='http://192.168.0.16:3000/login' method='POST' id='signinForm'>
+			<label for='username'>Name:</label>
+			<input type='text' name='username' id='username' required autofocus>
 			<br>
 			<label for='password'>Password:</label>
 			<input type='password' name='password' id='password' required>
@@ -37,8 +38,8 @@
 				<input type="radio" name='gender' id='female'>
 			</fieldset>
 			<br>
-			<label for='date'>Date of birth:</label>
-			<input type='date' name='date' id='date' value='2000-01-01' min='1920-01-01' max='2000-01-01'>
+			<label for='birthdate'>Date of birth:</label>
+			<input type='date' name='birthdate' id='birthdate' value='2000-01-01' min='1920-01-01' max='2000-01-01'>
 			<br><br><br>
 			<input type='submit' name='submit' id='submit' value='Submit'>
 		</form>

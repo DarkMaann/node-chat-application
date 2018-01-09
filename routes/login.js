@@ -15,7 +15,7 @@ mongoose.connect(connStr, {useMongoClient: true}, function(err) {
 
 
 
-// handle the post request to /login sending appropriate url string
+// handle the post request to /login (from ./ ) and handle user login
 router.get('/', function(req, res, next) {
 
 	// check if user is accessing this page through homePage or manually, and if he/she has entered credentials
@@ -30,40 +30,71 @@ router.get('/', function(req, res, next) {
 	
 	if (!credentialsAscii[0] || !credentialsAscii[1]) return res.status(401).send('You must enter both username and password.');
 
-	let potentialUser = new userModel({
-		username: credentialsAscii[0],
-		password: credentialsAscii[1]
-	});
-
+	
+	let username = credentialsAscii[0];
+	let password = credentialsAscii[1];
+	
 	// check in the database if the user with given username exist
-	userModel.findOne({username: potentialUser.username}, function(err, user) {
+	userModel.findOne({username: username}, function(err, user) {
 		if (err) throw err;
 		
-		// if user already exist, check validity of the password, else save the new user
+		// if user already exist, check validity of the password
 		if (user) {
-
-			user.comparePassword(potentialUser.password, function(err, isMatch) {
+			
+			// if it is a match, forward the user to chat page
+			user.comparePassword(password, function(err, isMatch) {
 				if (err) throw err;
 				if (isMatch) {
-					req.session.name = potentialUser.username;
-					res.status(200).send('http://192.168.8.101:3000/chat');
+					req.session.name = username;
+					res.status(200).send('http://192.168.0.16:3000/chat');
 				} else {
 					res.status(401).send('You entered the wrong password.');
 				}
 			});
-
+			
 		} else {
-
-			potentialUser.save((err) => {
-				if (err) throw err;
-				req.session.name = potentialUser.username;
-				// send the chat page to the new user....for now
-				res.status(200).send('http://192.168.8.101:3000/chat');
-			});
-
+			// user doesn't exist, send appropriate message
+			res.status(401).send(`You entered the wrong username, or you don't have created account.`);
+		
 		}
-
+		
 	});
+	
+});
+
+
+
+// hande post request to /login (from /signin) and register new user
+router.post('/', function(req, res, next) {
+	
+	// check if password entered for the second time matches with first one
+	if (req.body.password !== req.body.password2) {
+		return res.render('signin', {
+			title: 'Sign In',
+			instruction: 'Please fill the given form',
+			message: 'Passwords must match.'
+		});
+	}
+	
+	let potentialUser = new userModel({
+		username: req.body.username,
+		password: req.body.password,
+		email: req.body.email,
+		gender: req.body.gender,
+		birthdate: req.body.birthdate,
+		image: req.body.image
+	});
+	
+	// save the user to the database and save name to the existing session
+	potentialUser.save((err) => {
+		if (err) throw err;
+		req.session.name = potentialUser.username;
+
+		// send the chat page to the new user
+		res.redirect('/chat');
+	
+	});
+
 
 });
 

@@ -27,7 +27,7 @@ window.onload = function () {
 	logInButton.addEventListener('click', function() {
 		
 		// make a get request to /routes/login.js, sending credentials from input elements
-		xmlhttp.open('GET', 'http://192.168.8.101:3000/login');
+		xmlhttp.open('GET', 'http://192.168.0.16:3000/login');
 		xmlhttp.setRequestHeader('Authorization','Basic ' + btoa(name.value + ':' + pass.value));
 		xmlhttp.send();
 
@@ -36,7 +36,7 @@ window.onload = function () {
 	signInButton.addEventListener('click', function() {
 
 		// make a get request to /routes/signin.js to get a form for signing in
-		location.replace('http://192.168.8.101:3000/signin');
+		location.replace('http://192.168.0.16:3000/signin');
 
 	});
 
