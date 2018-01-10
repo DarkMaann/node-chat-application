@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "mongo": "mongo-express -a -u admin -p pass",
     "wp": "webpack",
     "predebug": "for file in ./public/stylesheets/*.less; do lessc $file `echo $file | sed -e 's/less/css/'`; done",
     "debug": "webpack -w & nodemon --inspect ./bin/www",
@@ -19,6 +20,7 @@
     "express-session": "^1.15.6",
     "mongoose": "^4.13.5",
     "morgan": "~1.8.1",
+    "multer": "^1.3.0",
     "serve-favicon": "~2.4.2",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4"

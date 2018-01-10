@@ -1,5 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
+var storage = multer.diskStorage({
+	destination: function(req, res, cb) {
+		cb(null, `${process.cwd()}/public/images`);
+	},
+});
+var upload = multer({storage: storage});
 var mongoose = require('mongoose');
 var userModel = require('../public/javascripts/userModel'); // import mongoose schema based user model
 
@@ -46,6 +53,7 @@ router.get('/', function(req, res, next) {
 				if (err) throw err;
 				if (isMatch) {
 					req.session.name = username;
+					req.session.image = user.image;
 					res.status(200).send('http://192.168.8.101:3000/chat');
 				} else {
 					res.status(401).send('You entered the wrong password.');
@@ -54,7 +62,7 @@ router.get('/', function(req, res, next) {
 			
 		} else {
 			// user doesn't exist, send appropriate message
-			res.status(401).send(`You entered the wrong username, or you don't have created account.`);
+			res.status(401).send(`You entered the wrong username, or you didn't create account.`);
 		
 		}
 		
@@ -65,7 +73,7 @@ router.get('/', function(req, res, next) {
 
 
 // hande post request to /login (from /signin) and register new user
-router.post('/', function(req, res, next) {
+router.post('/', upload.single('image'), function(req, res, next) {
 	
 	// check if password entered for the second time matches with first one
 	if (req.body.password !== req.body.password2) {
@@ -82,14 +90,14 @@ router.post('/', function(req, res, next) {
 		email: req.body.email,
 		gender: req.body.gender,
 		birthdate: req.body.birthdate,
-		image: req.body.image
+		image: `./images/${req.file.filename}`
 	});
 	
 	// save the user to the database and save name to the existing session
 	potentialUser.save((err) => {
 		if (err) throw err;
 		req.session.name = potentialUser.username;
-
+		req.session.image = potentialUser.image;
 		// send the chat page to the new user
 		res.redirect('/chat');
 	

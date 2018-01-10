@@ -86,6 +86,13 @@ body {
   overflow-wrap: break-word;
   white-space: pre-wrap;
 }
+#profilePic {
+  height: 100px;
+  width: 100px;
+}
+#btn {
+  height: 40px;
+}
 /* mixins */
 .msgLeft {
   position: relative;

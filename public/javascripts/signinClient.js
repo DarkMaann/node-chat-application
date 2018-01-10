@@ -1,5 +1,7 @@
 window.onload = () => {
-
+	
+	
+	let signinForm = document.getElementById('signinForm');
 	let imageFile = document.getElementById('image');
 	let imageLink = document.getElementById('imageLink');
 	let preview = document.getElementById('imagePreview');
@@ -15,6 +17,7 @@ window.onload = () => {
 		
 		// create and append image to div container
 		let img = document.createElement('img');
+		img.id = 'thumbnail';
 		preview.appendChild(img);
 		
 		// use File API to load a file (pic) from given url and attach an onload listener to display it in img element
@@ -29,5 +32,12 @@ window.onload = () => {
 		if (imageFile) imageFile.click();
 		e.preventDefault();
 	}, false); // ToDo: see if it works without false
+
+
+	// // replace input#image.value (name of the picture uploaded) with dataURL
+	signinForm.onsubmit = function() {
+		imageFile.value = document.getElementById('thumbnail').src;
+		alert(imageFile.value);
+	};
 
 };
