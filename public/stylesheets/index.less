@@ -3,6 +3,30 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+#signIn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#signInBox {
+	.box();
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+#buttonDiv {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+/* mixins */
+
+.box(@width:2px;@padding:5px;@margin:0px) {
+	border-style: solid;
+    border-width: @width;
+	border-color: black;
+	padding: @padding;
+	margin: @margin;
 }

@@ -9,9 +9,10 @@ window.onload = () => {
 	let btn = document.getElementById('btn');
 	let yourName = document.getElementById('yourName').innerHTML;
 
-	// start listening for server messages
-	socket.on('serverMsg', (data) => {
-		let renderedMsg = (data.name == yourName ? 'You said' : data.name + ' said') + ': ' + data.msg;
+
+	// start listening for chat messages coming from socket server (serverMsg event) via broadcasting
+	socket.on('serverMsg', data => {
+		let renderedMsg = (data.name == yourName ? 'You said' : data.name + ' said') + ':\n' + data.msg;
 		let leftOrRight = data.name == yourName ? 'msgRight' : 'msgLeft';
 		let newEl = creator.createHTML('p', chatSpace, renderedMsg);
 		creator.appendAttr(newEl, 'class', leftOrRight);
@@ -20,14 +21,21 @@ window.onload = () => {
 	});
 
 	// start listening for enter keypress
-	document.addEventListener('keypress', (event) => {
-
-		// send message if enter was pressed and message box isn't empty
+	document.addEventListener('keypress', event => {
+		// emit clientMsg event and send chat message to socket server if enter was pressed and message box isn't empty 
 		if (event.charCode == 13 && messageSpace.value != ''){
 			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
 			messageSpace.value = '';
 		}
 
+		// emit this event for server to register that user is active
+		socket.emit('clientActive');
+
+	});
+
+
+	socket.on('usersNumberChangedServer', data => {
+		
 	});
 
 	// click listener for sending request to /logout page

@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var touchSession = require('./public/javascripts/touchSession');
 var ioParser = require('./public/javascripts/io');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -43,7 +44,9 @@ app.use(session({
 		url: 'mongodb://localhost:27017/Sessions'
 	})
 }));
+app.use(touchSession(io)); // activate your touchSession middleware that you made
 
+// handle routes
 app.use('/', index);
 app.use('/login', login);
 app.use('/chat', chat);

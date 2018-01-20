@@ -8,7 +8,9 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage});
 var mongoose = require('mongoose');
-var userModel = require('../public/javascripts/userModel'); // import mongoose schema based user model
+var userModel = require('../public/javascripts/userModel');
+var socket = require('socket.io-client')('http://192.168.8.101:4000');
+
 
 // connection string for user database
 let connStr = 'mongodb://localhost:27017/ChatUsers';
@@ -55,6 +57,8 @@ router.get('/', function(req, res, next) {
 					req.session.name = username;
 					req.session.image = user.image;
 					res.status(200).send('http://192.168.8.101:3000/chat');
+					// notify server that a new user has logged in
+					socket.emit('usersNumberChangedClient', {name: req.session.name});
 				} else {
 					res.status(401).send('You entered the wrong password.');
 				}
@@ -63,7 +67,6 @@ router.get('/', function(req, res, next) {
 		} else {
 			// user doesn't exist, send appropriate message
 			res.status(401).send(`You entered the wrong username, or you didn't create account.`);
-		
 		}
 		
 	});
@@ -77,11 +80,8 @@ router.post('/', upload.single('image'), function(req, res, next) {
 	
 	// check if password entered for the second time matches with first one
 	if (req.body.password !== req.body.password2) {
-		return res.render('signin', {
-			title: 'Sign In',
-			instruction: 'Please fill the given form',
-			message: 'Passwords must match.'
-		});
+		req.session.msg = 'Passwords must match.';
+		res.redirect('./signin');
 	}
 	
 	let potentialUser = new userModel({
@@ -96,11 +96,16 @@ router.post('/', upload.single('image'), function(req, res, next) {
 	// save the user to the database and save name to the existing session
 	potentialUser.save((err) => {
 		if (err) throw err;
+
 		req.session.name = potentialUser.username;
 		req.session.image = potentialUser.image;
+
 		// send the chat page to the new user
-		res.redirect('/chat');
+		res.redirect('./chat');
 	
+		// notify server that a new user has logged in
+		socket.emit('usersNumberChangedClient');
+
 	});
 
 

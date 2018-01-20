@@ -10,22 +10,27 @@
 </head>
 
 <body>
-	<h1><%= title %></h1>
+	<div id='signIn'>
+		<h1 id='title'><%= title %></h1>
+		<div id='signInBox'>
+			<label for="name">User name:</label>
+			<input type="text" name="name" id="name">
+			<br> 
+			<label for='password'>Password:</label>
+			<input type="password" name="password" id="password">
+			<br>
 
-	User name:
-	<input type="text" name="name" id="name">
-	<br> Password:
-	<input type="password" name="password" id="password">
-	<br>
+			<div id='buttonDiv'>
+				<button id="logInButton">Log in</button>
+				<button id='signInButton'>Sing in</button>
+			</div>
+			<br>
+		</div>
+		
+		<br>
 
-	<button id="logInButton">Log in</button>
-	<button id='signInButton'>Sing in</button>
-	<br>
-	<br>
-
-	<p id='message'>
-		<%= message %>
-	</p>
+		<p id='message'><%= message %></p>
+	</div>
 </body>
 
 </html>

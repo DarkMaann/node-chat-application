@@ -38,6 +38,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-basis: 50%;
+  max-width: 50%;
 }
 #chatSpace {
   border-style: solid;
@@ -80,7 +81,8 @@ body {
 }
 .msg {
   position: relative;
-  width: 60%;
+  min-width: auto;
+  max-width: 40%;
   padding: 5px;
   clear: both;
   overflow-wrap: break-word;
@@ -96,25 +98,29 @@ body {
 /* mixins */
 .msgLeft {
   position: relative;
-  width: 60%;
+  min-width: auto;
+  max-width: 40%;
   padding: 5px;
   clear: both;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   float: left;
-  text-align: left;
+  text-align: justify;
   background-color: blue;
   color: white;
+  border-radius: 10px;
 }
 .msgRight {
   position: relative;
-  width: 60%;
+  min-width: auto;
+  max-width: 40%;
   padding: 5px;
   clear: both;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   float: right;
-  text-align: right;
+  text-align: justify;
   background-color: limegreen;
   color: black;
+  border-radius: 10px;
 }

@@ -9,8 +9,9 @@ router.get('/', function(req, res, next) {
 		res.render('signin', {
 			title: 'Sign In',
 			instruction: 'Please fill the given form',
-			message: ''
+			message: 'msg' in req.session ? req.session.msg : ''
 		});
+		delete req.session.msg;
 	} else {
 		res.redirect('/chat');
 	}
