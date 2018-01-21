@@ -2,8 +2,10 @@ var {MongoClient} = require('mongodb');
 var url = 'mongodb://localhost:27017';
 var dbName = 'Sessions';
 
-console.log('child initialised...');
+console.log('Child initialised...');
 
+
+// when signal from parent arrives, get all active sessions from db and send info back
 process.on('message', data => {
 
 	MongoClient.connect(url, function(err, client) {
@@ -16,8 +18,7 @@ process.on('message', data => {
 
 		// get all sessions (session objects) from database and send to parent
 		collection.find({}).toArray(function(err, docs){
-			console.log(docs);
-			process.send({msg: 'koOoOolko sam?!?!'});
+			process.send({sessions: docs});
 		});
 
 	});

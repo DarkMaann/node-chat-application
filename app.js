@@ -9,6 +9,8 @@ var touchSession = require('./public/javascripts/touchSession');
 var ioParser = require('./public/javascripts/io');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var childHandler = require('./public/javascripts/childSpawner');
+
 
 var index = require('./routes/index');
 var chat = require('./routes/chat');
@@ -16,12 +18,15 @@ var login = require('./routes/login');
 var logout = require('./routes/logout');
 var signin = require('./routes/signin');
 
+
+// handle websocket server
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 
-// start listening for websocket traffic
+// and start listening for websocket traffic
 server.listen(4000);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,8 +58,12 @@ app.use('/chat', chat);
 app.use('/logout', logout);
 app.use('/signin', signin);
 
+
 // pass io object to imported ./io.js module
 ioParser(io);
+// set handler for child processes
+childHandler('./public/javascripts/checkActiveSessions.js');
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -7,6 +7,7 @@
     "wp": "webpack",
     "predebug": "for file in ./public/stylesheets/*.less; do lessc $file `echo $file | sed -e 's/less/css/'`; done",
     "debug": "webpack -w & nodemon --inspect ./bin/www",
+    "debug-brk": "webpack -w & nodemon --inspect-brk ./bin/www",
     "start": "nodemon ./bin/www"
   },
   "dependencies": {

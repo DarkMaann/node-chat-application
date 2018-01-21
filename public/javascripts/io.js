@@ -1,8 +1,3 @@
-// initialize child process to be in charge of getting active sessions from database
-var {fork} = require('child_process');
-var checkActiveSessions = fork('./checkActiveSessions.js');
-
-
 function ioParser(io) {
 	
 	// websocket listener for client messages
@@ -13,17 +8,20 @@ function ioParser(io) {
 			io.emit('serverMsg', data);
 		});
 
-		// listen for client log in or out and fetch active sessions and update their user-online list
+		// listen for client log in or out and send signal to childSpawner to 
+		// tell his subprocess to fetch active sessions and update their user-online list
 		socket.on('usersNumberChangedClient', data => {
-			console.log(`Client ${data ? data.name : ''}or someone has entered or left`);
-			checkActiveSessions.send({msg: 'giveMeSessions'});
-		});
-		
-		checkActiveSessions.on('message', data => {
-			console.log(data.msg);
-			//io.emit('usersNumberChangedServer', data);
+			console.log(`Client ${data ? data.name : ''} has ${data ? 'entered' : 'left'}`);
+			socket.broadcast.emit('getActiveSessions');
 		});
 
+		// listen for local socket from childSpawner and act when you receive active sessions
+		socket.on('forwardActiveSessions', data => {
+			let activeSessions = data.sessions.map(element => 'name' in JSON.parse(element.session) ? JSON.parse(element.session) : null)
+									 .filter(element => element);
+			io.emit('updateUserList', {sessions: activeSessions});
+		});
+		
 	});
 
 };

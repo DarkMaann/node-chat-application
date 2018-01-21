@@ -106,7 +106,7 @@ body {
   white-space: pre-wrap;
   float: left;
   text-align: justify;
-  background-color: blue;
+  background-color: #333d79;
   color: white;
   border-radius: 10px;
 }
@@ -120,7 +120,7 @@ body {
   white-space: pre-wrap;
   float: right;
   text-align: justify;
-  background-color: limegreen;
-  color: black;
+  background-color: #237738;
+  color: white;
   border-radius: 10px;
 }

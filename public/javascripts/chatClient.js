@@ -1,3 +1,5 @@
+import { userInfo } from 'os';
+
 var socket = require('socket.io-client')('http://192.168.8.101:4000'); // get the socket object and connect to server
 var creator = require('./createHtml'); // get the html creation library
 
@@ -6,6 +8,7 @@ window.onload = () => {
 
 	let chatSpace = document.getElementById('chatSpace');
 	let messageSpace = document.getElementById('messageSpace');
+	let usersSpace = document.getElementById('usersDiv');
 	let btn = document.getElementById('btn');
 	let yourName = document.getElementById('yourName').innerHTML;
 
@@ -21,9 +24,9 @@ window.onload = () => {
 	});
 
 	// start listening for enter keypress
-	document.addEventListener('keypress', event => {
+	document.addEventListener('keydown', event => {
 		// emit clientMsg event and send chat message to socket server if enter was pressed and message box isn't empty 
-		if (event.charCode == 13 && messageSpace.value != ''){
+		if (event.key == 'Enter' && messageSpace.value != ''){
 			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
 			messageSpace.value = '';
 		}
@@ -34,8 +37,11 @@ window.onload = () => {
 	});
 
 
-	socket.on('usersNumberChangedServer', data => {
-		
+	socket.on('updateUserList', data => {
+		data.sessions.forEach(element => {
+			let newEl = creator.createHTML('div', usersSpace, element.name);
+			creator.appendAttr(newEl, 'class', 'users');
+		});
 	});
 
 	// click listener for sending request to /logout page
