@@ -1,7 +1,18 @@
-import { userInfo } from 'os';
-
 var socket = require('socket.io-client')('http://192.168.8.101:4000'); // get the socket object and connect to server
 var creator = require('./createHtml'); // get the html creation library
+
+let actionTracker = {
+	isActive: true,
+	shouldSend() {
+		if (this.isActive) this.send();
+	},
+	send() {
+		this.isActive = false;
+		let xmlhttp = new XMLHttpRequest();
+		xmlhttp.open('GET', 'http://192.168.8.101:3000/touch');
+		xmlhttp.send();
+	}
+};
 
 
 window.onload = () => {
@@ -20,7 +31,6 @@ window.onload = () => {
 		let newEl = creator.createHTML('p', chatSpace, renderedMsg);
 		creator.appendAttr(newEl, 'class', leftOrRight);
 		chatSpace.scrollTop = chatSpace.scrollHeight; // set automatic scrolldown of the scrollbar
-
 	});
 
 	// start listening for enter keypress
@@ -31,12 +41,10 @@ window.onload = () => {
 			messageSpace.value = '';
 		}
 
-		// emit this event for server to register that user is active
-		socket.emit('clientActive');
-
+		actionTracker.isActive = true;
 	});
 
-
+	// take action when this signal arrives from io-server and update active users list with given data
 	socket.on('updateUserList', data => {
 		data.sessions.forEach(element => {
 			let newEl = creator.createHTML('div', usersSpace, element.name);
@@ -49,6 +57,7 @@ window.onload = () => {
 		location.replace('http://192.168.8.101:3000/logout');
 	});
 
+	// check for keyboard activity every 5min. and ask for touch if user is active
+	setInterval(() => actionTracker.shouldSend(), 5000);
 
 };
-

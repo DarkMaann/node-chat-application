@@ -5,10 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
-var touchSession = require('./public/javascripts/touchSession');
-var ioParser = require('./public/javascripts/io');
+var ioHandler = require('./public/javascripts/io');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var storeInstance = new MongoStore({
+	url: 'mongodb://localhost:27017/Sessions'
+});
 var childHandler = require('./public/javascripts/childSpawner');
 
 
@@ -17,6 +19,7 @@ var chat = require('./routes/chat');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var signin = require('./routes/signin');
+var touch = require('./routes/touch');
 
 
 // handle websocket server
@@ -45,11 +48,9 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false,
 	unset: 'destroy',
-	store: new MongoStore({
-		url: 'mongodb://localhost:27017/Sessions'
-	})
+	store: storeInstance
 }));
-app.use(touchSession(io)); // activate your touchSession middleware that you made
+
 
 // handle routes
 app.use('/', index);
@@ -57,10 +58,11 @@ app.use('/login', login);
 app.use('/chat', chat);
 app.use('/logout', logout);
 app.use('/signin', signin);
+app.use('/touch', touch);
 
 
 // pass io object to imported ./io.js module
-ioParser(io);
+ioHandler(io, storeInstance);
 // set handler for child processes
 childHandler('./public/javascripts/checkActiveSessions.js');
 

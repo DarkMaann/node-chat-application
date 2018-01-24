@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 	});
 	res.redirect('/');
 	
-	// notify server that a user has left
+	// notify server that a user has left POSIBLY TO MOVE UP BCS RACE CONDITIONS
 	socket.emit('usersNumberChangedClient');
 
 });
