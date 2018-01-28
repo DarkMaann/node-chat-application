@@ -23,6 +23,8 @@ window.onload = () => {
 	let btn = document.getElementById('btn');
 	let yourName = document.getElementById('yourName').innerHTML;
 
+	// emit this event to obtain active users
+	socket.emit('userPageRefreshed');
 
 	// start listening for chat messages coming from socket server (serverMsg event) via broadcasting
 	socket.on('serverMsg', data => {
@@ -46,9 +48,15 @@ window.onload = () => {
 
 	// take action when this signal arrives from io-server and update active users list with given data
 	socket.on('updateUserList', data => {
+		usersSpace.innerHTML = '';
 		data.sessions.forEach(element => {
-			let newEl = creator.createHTML('div', usersSpace, element.name);
-			creator.appendAttr(newEl, 'class', 'users');
+			let newDiv = creator.createHTML('div', usersSpace, '');
+			creator.appendAttr(newDiv, 'class', 'users');
+			let newImg = creator.createHTML('img', newDiv, null);
+			creator.appendAttr(newImg, 'class', 'activeUsersPic');
+			newImg.src = element.image;
+			let newName = creator.createHTML('p', newDiv, element.name);
+			creator.appendAttr(newName, 'class', 'activeUsersName');
 		});
 	});
 

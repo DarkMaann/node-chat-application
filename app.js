@@ -46,6 +46,7 @@ app.use(session({
 	secret: 'KolkoSiDobar',
 	cookie: {maxAge: 3600000},
 	resave: false,
+	rolling: true,
 	saveUninitialized: false,
 	unset: 'destroy',
 	store: storeInstance

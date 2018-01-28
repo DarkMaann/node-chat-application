@@ -15,8 +15,10 @@ function forkProcess(processUrl) {
 	});
 
 	// and forward it back to socket server (io.js)
-	childProcess.on('message', data => socket.emit('forwardActiveSessions', data));
+	childProcess.on('message', data => socket.emit('gotActiveSessions', data));
 
+	// send the command to load active sessions at node app startup, precaution for possible app crash 
+	childProcess.send('getActiveSessions');
 }
 
 

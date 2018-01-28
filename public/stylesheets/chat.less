@@ -3,21 +3,11 @@ body {
 	padding: 0;
     height: 98%;
     width: 98%;
-    background-color: gray
+    background-color: rgb(202, 200, 200)
 }
-
-#main {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: stretch;
-	height: 78%;
-    width: 100%;
-}
-
+//--------------------------------header--------------------------------//
 #header {
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 	p span {
 		.box();
@@ -25,8 +15,27 @@ body {
 	}
 }
 
-#footer {
-	clear: both;
+#btn {
+	height: 40px;
+}
+//--------------------------------main--------------------------------//
+#main {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: stretch;
+	height: 65%;
+    width: 100%;
+}
+
+#imageDiv {
+	position: fixed;
+	left: 0.5%;
+	top: 7%; 
+}
+
+#profilePic {
+	.picture(100px; 100px;);
 }
 
 #chatDiv {
@@ -35,33 +44,18 @@ body {
 	flex-direction: column;
 	flex-basis: 50%;
 	max-width: 50%;
+	background-color: royalblue;
+	border-right-width: 0;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
 }
 
 #chatSpace {
 	.box();
 	flex-grow: 1;
     background-color: white;
-    overflow-x:hidden;
-    overflow-y:visible;
-}
-
-#messageSpace {
-	.box();
-    background-color: khaki;
-    text-align: right;
-}
-
-#usersDiv {
-	.box(2px,0px);
-	display: flex;
-	flex-direction: column;
-	flex-basis:10%;
-	border-left-width: 0;
-}
-
-.users{
-	.box(0px;0px;2px);
-	text-align: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .msg {
@@ -74,17 +68,104 @@ body {
 	white-space: pre-wrap;
 }
 
-#profilePic {
-	height: 100px;
-	width: 100px;
+#messageSpace {
+	.box();
+	border-top-width: 0;
+    background-color: darkkhaki;
+    text-align: right;
 }
 
-#btn {
-	height: 40px;
+#usersDiv {
+	.box(2px;0px);
+	display: flex;
+	flex-direction: column;
+	flex-basis:10%;
+	border-left-width: 0;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: royalblue;
 }
-/* mixins */
 
-.box(@width:2px;@padding:5px;@margin:0px) {
+.users {
+	.box(@width:0px;@padding:5px);
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	align-content: center;
+}
+
+.users:hover {
+	box-shadow: inset 0 0 0 5px #53a7ea;
+}
+
+.activeUsersPic {
+	.picture(30px; 30px);
+	margin: 1vh;
+}
+
+.activeUsersName {
+	flex-grow: 4;
+	//vertical-align: middle;
+}
+//--------------------------------footer--------------------------------//
+#footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 1%;
+	background: rgb(71, 71, 71);
+}
+
+.singleChat {
+	.box();
+	background-color: white;
+	position: fixed;
+	left: 0;
+	bottom: 1%;
+	width: 100%/8;
+	height: 27%;
+	.singleChatTopBar {
+		.box(0;0;0);
+		display: flex;
+		justify-content: flex-end;
+		padding-left: 2%;
+		padding-right: 2%;
+		border-bottom-width: 2px;
+		background-color: #53a7ea;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 5%;
+		width: 96%;
+		font-size: 90%;
+		#closeBtn, #minimizeBtn {
+			border-radius: 100%;
+			width: 20px;
+		}
+		#closeBtn:hover {
+			background-color: red;
+		}
+		#minimizeBtn:hover {
+			background-color: yellow;
+		}
+	}
+	.singleMessageSpace {
+		.box(@padding:2%);
+		border-left: 0;
+		border-right: 0;
+		background-color: khaki;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 5%;
+		width: 96%;
+		text-align: right;
+	}
+}
+/******************************** mixins ********************************/
+
+.box(@width:2px; @padding:5px; @margin:0px) {
 	border-style: solid;
     border-width: @width;
 	border-color: black;
@@ -108,4 +189,11 @@ body {
 .msgRight {
 	.msg();
 	.float(right,rgb(35, 119, 56), white);
+}
+
+.picture(@width; @height) {
+	width: @width;
+	height: @height;
+	border: 2px double black;
+	border-radius: 10px;
 }

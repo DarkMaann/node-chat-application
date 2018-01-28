@@ -11,23 +11,30 @@
 	<header id='header'>
 		<div>
 			<p>Hello <span id='yourName'><%= name %></span></p>
-			<img src='<%= image %>' id='profilePic'>
 		</div>
 		<button id='btn'>Log out</button>
 	</header>
 	<div id='main'>
+		<div id='imageDiv'>
+			<img src='<%= image %>' id='profilePic'>
+		</div>
 		<div id='chatDiv'>
 			<div id='chatSpace'>
 			</div>
-			<br>
 			<input type='text' name='msg' id='messageSpace' placeholder='Say something...'>
 		</div>
 		<div id='usersDiv'>
 			<!-- active users go here-->
 		</div>
 	</div>
+	<div class='singleChat'>
+		<div class='singleChatTopBar'>
+			<img src="/images/minimize_window.png" id='minimizeBtn'>
+			<img src="/images/close_window.png" id='closeBtn'>
+		</div>
+		<input type='text' name='singleMessageSpace' class='singleMessageSpace' placeholder='Say something...'></input>
+	</div>
 	<footer id='footer'>
-		<p id='footerMsg'>Peer to peer chats go here!</p>
 	</footer>
 </body>
 

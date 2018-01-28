@@ -66,7 +66,7 @@ router.get('/', function(req, res, next) {
 			
 		} else {
 			// user doesn't exist, send appropriate message
-			res.status(401).send(`You entered the wrong username, or you didn't create account.`);
+			res.status(401).send(`You entered the wrong username, or you didn't create an account.`);
 		}
 		
 	});

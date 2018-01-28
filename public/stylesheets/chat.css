@@ -3,19 +3,10 @@ body {
   padding: 0;
   height: 98%;
   width: 98%;
-  background-color: gray;
-}
-#main {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: stretch;
-  height: 78%;
-  width: 100%;
+  background-color: #cac8c8;
 }
 #header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
 }
 #header p span {
@@ -26,8 +17,27 @@ body {
   margin: 0px;
   font-weight: bold;
 }
-#footer {
-  clear: both;
+#btn {
+  height: 40px;
+}
+#main {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
+  height: 65%;
+  width: 100%;
+}
+#imageDiv {
+  position: fixed;
+  left: 0.5%;
+  top: 7%;
+}
+#profilePic {
+  width: 100px;
+  height: 100px;
+  border: 2px double black;
+  border-radius: 10px;
 }
 #chatDiv {
   border-style: solid;
@@ -39,6 +49,10 @@ body {
   flex-direction: column;
   flex-basis: 50%;
   max-width: 50%;
+  background-color: royalblue;
+  border-right-width: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 #chatSpace {
   border-style: solid;
@@ -49,7 +63,16 @@ body {
   flex-grow: 1;
   background-color: white;
   overflow-x: hidden;
-  overflow-y: visible;
+  overflow-y: scroll;
+}
+.msg {
+  position: relative;
+  min-width: auto;
+  max-width: 40%;
+  padding: 5px;
+  clear: both;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 #messageSpace {
   border-style: solid;
@@ -57,7 +80,8 @@ body {
   border-color: black;
   padding: 5px;
   margin: 0px;
-  background-color: khaki;
+  border-top-width: 0;
+  background-color: darkkhaki;
   text-align: right;
 }
 #usersDiv {
@@ -70,32 +94,102 @@ body {
   flex-direction: column;
   flex-basis: 10%;
   border-left-width: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: royalblue;
 }
 .users {
   border-style: solid;
   border-width: 0px;
   border-color: black;
-  padding: 0px;
-  margin: 2px;
-  text-align: center;
-}
-.msg {
-  position: relative;
-  min-width: auto;
-  max-width: 40%;
   padding: 5px;
-  clear: both;
-  overflow-wrap: break-word;
-  white-space: pre-wrap;
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
 }
-#profilePic {
-  height: 100px;
-  width: 100px;
+.users:hover {
+  box-shadow: inset 0 0 0 5px #53a7ea;
 }
-#btn {
-  height: 40px;
+.activeUsersPic {
+  width: 30px;
+  height: 30px;
+  border: 2px double black;
+  border-radius: 10px;
+  margin: 1vh;
 }
-/* mixins */
+.activeUsersName {
+  flex-grow: 4;
+}
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1%;
+  background: #474747;
+}
+.singleChat {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
+  background-color: white;
+  position: fixed;
+  left: 0;
+  bottom: 1%;
+  width: 12.5%;
+  height: 27%;
+}
+.singleChat .singleChatTopBar {
+  border-style: solid;
+  border-width: 0;
+  border-color: black;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-bottom-width: 2px;
+  background-color: #53a7ea;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5%;
+  width: 96%;
+  font-size: 90%;
+}
+.singleChat .singleChatTopBar #closeBtn,
+.singleChat .singleChatTopBar #minimizeBtn {
+  border-radius: 100%;
+  width: 20px;
+}
+.singleChat .singleChatTopBar #closeBtn:hover {
+  background-color: red;
+}
+.singleChat .singleChatTopBar #minimizeBtn:hover {
+  background-color: yellow;
+}
+.singleChat .singleMessageSpace {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 2%;
+  margin: 0px;
+  border-left: 0;
+  border-right: 0;
+  background-color: khaki;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5%;
+  width: 96%;
+  text-align: right;
+}
+/******************************** mixins ********************************/
 .msgLeft {
   position: relative;
   min-width: auto;

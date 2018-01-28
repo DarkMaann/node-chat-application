@@ -1,4 +1,8 @@
+// this variable will hold latest array of active users, for users who only refresh their page
+var activeSessions;
+
 function ioHandler(io, store) {
+
 	// websocket listener for client messages
 	io.on('connection', socket => {
 
@@ -18,14 +22,20 @@ function ioHandler(io, store) {
 
 
 		// listen for local socket from childSpawner and act when you receive active sessions
-		socket.on('forwardActiveSessions', data => {
-			let activeSessions = data.sessions.map(element => 'name' in JSON.parse(element.session) ? JSON.parse(element.session) : null)
+		socket.on('gotActiveSessions', data => {
+			activeSessions = data.sessions.map(element => 'name' in JSON.parse(element.session) ? JSON.parse(element.session) : null)
 									 .filter(element => element);
 			io.emit('updateUserList', {sessions: activeSessions});
 		});
 		
 
+		// send list of active sessions only to the user who refreshed page
+		socket.on('userPageRefreshed', data => {
+			socket.emit('updateUserList', {sessions: activeSessions || []});
+		});
+
 	});
+
 };
 
 
