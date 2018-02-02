@@ -1,5 +1,7 @@
 // this variable will hold latest array of active users, for users who only refresh their page
 var activeSessions;
+// this variable will hold array of msg objects, i.e. chat history to serve to clients on page refresh
+var chatHistory = [];
 
 function ioHandler(io, store) {
 
@@ -9,7 +11,10 @@ function ioHandler(io, store) {
 
 		// broadcast chat message when received from certain user
 		socket.on('clientMsg', data => {
+			io.emit('writeToChatHistory', data);
 			io.emit('serverMsg', data);
+			// update local version of chatHistory for quicker access
+			chatHistory.push(data);
 		});
 
 
@@ -29,11 +34,20 @@ function ioHandler(io, store) {
 		});
 		
 
+		// listen for local socket from childSpawner and act when you receive chat history
+		socket.on('gotChatHistory', data => {
+			chatHistory = data;
+			io.emit('updateChatHistory', data);
+		});
+
+
 		// send list of active sessions only to the user who refreshed page
 		socket.on('userPageRefreshed', data => {
 			socket.emit('updateUserList', {sessions: activeSessions || []});
+			socket.emit('updateChatHistory', chatHistory);
 		});
 
+		
 	});
 
 };

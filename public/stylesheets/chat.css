@@ -81,7 +81,7 @@ body {
   padding: 5px;
   margin: 0px;
   border-top-width: 0;
-  background-color: darkkhaki;
+  background-color: khaki;
   text-align: right;
 }
 #usersDiv {
@@ -108,6 +108,9 @@ body {
   justify-content: center;
   text-align: center;
   align-content: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
 }
 .users:hover {
   box-shadow: inset 0 0 0 5px #53a7ea;
@@ -140,8 +143,8 @@ body {
   position: fixed;
   left: 0;
   bottom: 1%;
-  width: 12.5%;
-  height: 27%;
+  width: 220px;
+  height: 260px;
 }
 .singleChat .singleChatTopBar {
   border-style: solid;
@@ -154,7 +157,7 @@ body {
   padding-left: 2%;
   padding-right: 2%;
   border-bottom-width: 2px;
-  background-color: #53a7ea;
+  background-color: royalblue;
   position: absolute;
   top: 0;
   left: 0;
@@ -162,15 +165,21 @@ body {
   width: 96%;
   font-size: 90%;
 }
-.singleChat .singleChatTopBar #closeBtn,
-.singleChat .singleChatTopBar #minimizeBtn {
+.singleChat .singleChatTopBar .singleChatLabel {
+  margin-right: auto;
+  color: white;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.singleChat .singleChatTopBar .closeBtn,
+.singleChat .singleChatTopBar .minimizeBtn {
   border-radius: 100%;
   width: 20px;
 }
-.singleChat .singleChatTopBar #closeBtn:hover {
+.singleChat .singleChatTopBar .closeBtn:hover {
   background-color: red;
 }
-.singleChat .singleChatTopBar #minimizeBtn:hover {
+.singleChat .singleChatTopBar .minimizeBtn:hover {
   background-color: yellow;
 }
 .singleChat .singleMessageSpace {

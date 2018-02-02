@@ -11,7 +11,7 @@ var MongoStore = require('connect-mongo')(session);
 var storeInstance = new MongoStore({
 	url: 'mongodb://localhost:27017/Sessions'
 });
-var childHandler = require('./public/javascripts/childSpawner');
+var childSpawner = require('./public/javascripts/childSpawner');
 
 
 var index = require('./routes/index');
@@ -64,8 +64,10 @@ app.use('/touch', touch);
 
 // pass io object to imported ./io.js module
 ioHandler(io, storeInstance);
-// set handler for child processes
-childHandler('./public/javascripts/checkActiveSessions.js');
+// set handlers for child processes
+childSpawner.forkActiveSessionsGetter('./public/javascripts/checkActiveSessions.js');
+childSpawner.forkChatHistorySetter('./public/javascripts/saveChatHistory.js');
+childSpawner.forkChatHistoryGetter('./public/javascripts/openChatHistory.js');
 
 
 // catch 404 and forward to error handler

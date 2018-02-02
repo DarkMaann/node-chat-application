@@ -71,7 +71,7 @@ body {
 #messageSpace {
 	.box();
 	border-top-width: 0;
-    background-color: darkkhaki;
+    background-color: khaki;
     text-align: right;
 }
 
@@ -92,6 +92,9 @@ body {
 	justify-content: center;
 	text-align: center;
 	align-content: center;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
 }
 
 .users:hover {
@@ -123,8 +126,8 @@ body {
 	position: fixed;
 	left: 0;
 	bottom: 1%;
-	width: 100%/8;
-	height: 27%;
+	width: 220px;
+	height: 260px;
 	.singleChatTopBar {
 		.box(0;0;0);
 		display: flex;
@@ -132,21 +135,27 @@ body {
 		padding-left: 2%;
 		padding-right: 2%;
 		border-bottom-width: 2px;
-		background-color: #53a7ea;
+		background-color: royalblue;
 		position: absolute;
 		top: 0;
 		left: 0;
 		height: 5%;
 		width: 96%;
 		font-size: 90%;
-		#closeBtn, #minimizeBtn {
+		.singleChatLabel {
+			margin-right: auto;
+			color: white;
+			font-weight: bold;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		.closeBtn, .minimizeBtn {
 			border-radius: 100%;
 			width: 20px;
 		}
-		#closeBtn:hover {
+		.closeBtn:hover {
 			background-color: red;
 		}
-		#minimizeBtn:hover {
+		.minimizeBtn:hover {
 			background-color: yellow;
 		}
 	}

@@ -1,5 +1,7 @@
 var socket = require('socket.io-client')('http://192.168.8.101:4000'); // get the socket object and connect to server
 var creator = require('./createHtml'); // get the html creation library
+var mainDiv,chatSpace, messageSpace, usersSpace, btn, yourName;
+
 
 let actionTracker = {
 	isActive: true,
@@ -14,36 +16,37 @@ let actionTracker = {
 	}
 };
 
+function writeMessage(data) {
+	let renderedMsg = (data.name == yourName ? 'You said' : data.name + ' said') + ':\n' + data.msg;
+	let leftOrRight = data.name == yourName ? 'msgRight' : 'msgLeft';
+	let newEl = creator.createHTML('p', chatSpace, renderedMsg);
+	creator.appendAttr(newEl, 'class', leftOrRight);
+}
+
 
 window.onload = () => {
-
-	let chatSpace = document.getElementById('chatSpace');
-	let messageSpace = document.getElementById('messageSpace');
-	let usersSpace = document.getElementById('usersDiv');
-	let btn = document.getElementById('btn');
-	let yourName = document.getElementById('yourName').innerHTML;
-
+	
+	mainDiv = document.getElementById('main');
+	chatSpace = document.getElementById('chatSpace');
+	messageSpace = document.getElementById('messageSpace');
+	usersSpace = document.getElementById('usersDiv');
+	btn = document.getElementById('btn');
+	yourName = document.getElementById('yourName').innerHTML;
+	
 	// emit this event to obtain active users
 	socket.emit('userPageRefreshed');
-
+	
 	// start listening for chat messages coming from socket server (serverMsg event) via broadcasting
 	socket.on('serverMsg', data => {
-		let renderedMsg = (data.name == yourName ? 'You said' : data.name + ' said') + ':\n' + data.msg;
-		let leftOrRight = data.name == yourName ? 'msgRight' : 'msgLeft';
-		let newEl = creator.createHTML('p', chatSpace, renderedMsg);
-		creator.appendAttr(newEl, 'class', leftOrRight);
-		chatSpace.scrollTop = chatSpace.scrollHeight; // set automatic scrolldown of the scrollbar
+		writeMessage(data);
+		// set automatic scrolldown of the scrollbar
+		chatSpace.scrollTop = chatSpace.scrollHeight;
 	});
 
-	// start listening for enter keypress
-	document.addEventListener('keydown', event => {
-		// emit clientMsg event and send chat message to socket server if enter was pressed and message box isn't empty 
-		if (event.key == 'Enter' && messageSpace.value != ''){
-			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
-			messageSpace.value = '';
-		}
-
-		actionTracker.isActive = true;
+	// take action when this signal arrives from io-server and update chat history with given data
+	socket.on('updateChatHistory', dataArr => {
+		dataArr.forEach(element => writeMessage(element));
+		chatSpace.scrollTop = chatSpace.scrollHeight;
 	});
 
 	// take action when this signal arrives from io-server and update active users list with given data
@@ -58,6 +61,16 @@ window.onload = () => {
 			let newName = creator.createHTML('p', newDiv, element.name);
 			creator.appendAttr(newName, 'class', 'activeUsersName');
 		});
+	});
+
+	// start listening for enter keypress
+	document.addEventListener('keydown', event => {
+		// emit clientMsg event and send chat message to socket server if enter was pressed and message box isn't empty 
+		if (event.key == 'Enter' && messageSpace.value != ''){
+			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
+			messageSpace.value = '';
+		}
+		actionTracker.isActive = true; creator.createSingleChat(mainDiv, 'test testic');
 	});
 
 	// click listener for sending request to /logout page
