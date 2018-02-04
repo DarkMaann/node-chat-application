@@ -35,6 +35,8 @@ window.onload = () => {
 	
 	// emit this event to obtain active users
 	socket.emit('userPageRefreshed');
+	// calculate max number of single chats
+	creator.singleChatMax = Math.floor(window.innerWidth / 240);
 	
 	// start listening for chat messages coming from socket server (serverMsg event) via broadcasting
 	socket.on('serverMsg', data => {
@@ -70,7 +72,19 @@ window.onload = () => {
 			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
 			messageSpace.value = '';
 		}
-		actionTracker.isActive = true; creator.createSingleChat(mainDiv, 'test testic');
+		actionTracker.isActive = true;
+		creator.createSingleChat(mainDiv, Math.random());
+	});
+
+	// set the variable for maximum number of single chats when the screen is resized
+	// delete element that end up out of viewport
+	window.addEventListener('resize', function() {
+		let singleChatList = document.getElementsByClassName('singleChatTopBar');
+		creator.singleChatMax = Math.floor(window.innerWidth / 240);
+		Array
+			.from(singleChatList)
+			.forEach((element, index) => {if (index >= creator.singleChatMax) element.parentNode.remove();});
+		if (singleChatList.length < creator.singleChatMax) creator.singleChatNumber = singleChatList.length;
 	});
 
 	// click listener for sending request to /logout page

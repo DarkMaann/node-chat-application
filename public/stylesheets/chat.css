@@ -180,7 +180,7 @@ body {
   background-color: red;
 }
 .singleChat .singleChatTopBar .minimizeBtn:hover {
-  background-color: yellow;
+  background-color: orange;
 }
 .singleChat .singleMessageSpace {
   border-style: solid;
@@ -197,6 +197,79 @@ body {
   height: 5%;
   width: 96%;
   text-align: right;
+}
+.singleChatMinimized {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
+  background-color: white;
+  position: fixed;
+  left: 0;
+  bottom: 1%;
+  width: 220px;
+  height: 7px;
+}
+.singleChatMinimized .singleChatTopBar {
+  border-style: solid;
+  border-width: 0;
+  border-color: black;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-bottom-width: 2px;
+  background-color: #a79b9b;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 96%;
+  font-size: 90%;
+}
+.singleChatMinimized .singleChatTopBar .singleChatLabel {
+  margin-right: auto;
+  color: white;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.singleChatMinimized .singleChatTopBar .closeBtn,
+.singleChatMinimized .singleChatTopBar .minimizeBtn {
+  border-radius: 100%;
+  width: 20px;
+  display: none;
+}
+.singleChatMinimized .singleChatTopBar .closeBtn:hover {
+  background-color: red;
+}
+.singleChatMinimized .singleChatTopBar .minimizeBtn:hover {
+  background-color: orange;
+}
+.singleChatMinimized .singleChatTopBar:hover {
+  background-color: orange;
+}
+.singleChatMinimized .singleChatTopBar:hover .singleChatLabel {
+  color: #333333;
+}
+.singleChatMinimized .singleMessageSpace {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 2%;
+  margin: 0px;
+  border-left: 0;
+  border-right: 0;
+  background-color: khaki;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5%;
+  width: 96%;
+  text-align: right;
+  display: none;
 }
 /******************************** mixins ********************************/
 .msgLeft {

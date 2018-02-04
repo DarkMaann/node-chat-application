@@ -156,7 +156,7 @@ body {
 			background-color: red;
 		}
 		.minimizeBtn:hover {
-			background-color: yellow;
+			background-color: orange;
 		}
 	}
 	.singleMessageSpace {
@@ -170,6 +170,67 @@ body {
 		height: 5%;
 		width: 96%;
 		text-align: right;
+	}
+}
+
+.singleChatMinimized {
+	.box();
+	background-color: white;
+	position: fixed;
+	left: 0;
+	bottom: 1%;
+	width: 220px;
+	height: 7px;
+	.singleChatTopBar {
+		.box(0;0;0);
+		display: flex;
+		justify-content: flex-end;
+		padding-left: 2%;
+		padding-right: 2%;
+		border-bottom-width: 2px;
+		background-color: rgb(167, 155, 155);
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 96%;
+		font-size: 90%;
+		.singleChatLabel {
+			margin-right: auto;
+			color: white;
+			font-weight: bold;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		.closeBtn, .minimizeBtn {
+			border-radius: 100%;
+			width: 20px;
+			display: none;
+		}
+		.closeBtn:hover {
+			background-color: red;
+		}
+		.minimizeBtn:hover {
+			background-color: orange;
+		}
+	}
+	.singleChatTopBar:hover {
+		background-color: orange;
+		.singleChatLabel {
+			color: rgb(51, 51, 51);
+		}
+	}
+	.singleMessageSpace {
+		.box(@padding:2%);
+		border-left: 0;
+		border-right: 0;
+		background-color: khaki;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 5%;
+		width: 96%;
+		text-align: right;
+		display: none;
 	}
 }
 /******************************** mixins ********************************/
