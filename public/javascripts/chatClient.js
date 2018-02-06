@@ -55,13 +55,7 @@ window.onload = () => {
 	socket.on('updateUserList', data => {
 		usersSpace.innerHTML = '';
 		data.sessions.forEach(element => {
-			let newDiv = creator.createHTML('div', usersSpace, '');
-			creator.appendAttr(newDiv, 'class', 'users');
-			let newImg = creator.createHTML('img', newDiv, null);
-			creator.appendAttr(newImg, 'class', 'activeUsersPic');
-			newImg.src = element.image;
-			let newName = creator.createHTML('p', newDiv, element.name);
-			creator.appendAttr(newName, 'class', 'activeUsersName');
+			creator.populateActiveUser(element, usersSpace);
 		});
 	});
 
@@ -73,7 +67,6 @@ window.onload = () => {
 			messageSpace.value = '';
 		}
 		actionTracker.isActive = true;
-		creator.createSingleChat(mainDiv, Math.random());
 	});
 
 	// set the variable for maximum number of single chats when the screen is resized

@@ -24,6 +24,34 @@ var library = {
 		el.setAttribute(attrName, attrVal);
 	},
 
+	// dynamically create active-users list with classes and effects form chat.css file
+	populateActiveUser(user, parentElem) {
+		let self = this;
+		let newDiv = this.createHTML('div', parentElem, '');
+		this.appendAttr(newDiv, 'class', 'users');
+		let newImg = this.createHTML('img', newDiv, null);
+		this.appendAttr(newImg, 'class', 'activeUsersPic');
+		newImg.src = user.image;
+		let newName = this.createHTML('p', newDiv, user.name);
+		this.appendAttr(newName, 'class', 'activeUsersName');
+		newDiv.addEventListener('click', function(ev) {
+			let alreadyOpen = false;
+			Array
+				.from(document.getElementsByClassName('singleChatTopBar'))
+				.forEach(item => {
+					if (item.firstElementChild.textContent === user.name) {
+						// maximize existing single chat and highligh it
+						item.parentNode.className = 'singleChat';
+						item.style.animationName = 'lightUp';
+						setTimeout(() => item.style.animationName = 'none', 300);
+						alreadyOpen = true;
+						return;
+					};
+				});
+			if (!alreadyOpen) self.createSingleChat(parentElem, user.name);
+		});
+	},
+
 	// dynamically create single chat with classes from chat.css file
 	createSingleChat(mainDiv, talkToPerson) {
 		let self = this;

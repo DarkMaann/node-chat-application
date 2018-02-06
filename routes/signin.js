@@ -6,12 +6,13 @@ router.get('/', function(req, res, next) {
 
 	// redirect user if he/she has already active logged in session
 	if (!req.session.name) {
+		let msg = 'msg' in req.session ? req.session.msg : '';
+		if (msg) delete req.session.msg;
 		res.render('signin', {
 			title: 'Sign In',
 			instruction: 'Please fill the given form',
-			message: 'msg' in req.session ? req.session.msg : ''
+			message: msg
 		});
-		delete req.session.msg;
 	} else {
 		res.redirect('/chat');
 	}

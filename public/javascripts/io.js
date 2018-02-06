@@ -28,8 +28,9 @@ function ioHandler(io, store) {
 
 		// listen for local socket from childSpawner and act when you receive active sessions
 		socket.on('gotActiveSessions', data => {
-			activeSessions = data.sessions.map(element => 'name' in JSON.parse(element.session) ? JSON.parse(element.session) : null)
-									 .filter(element => element);
+			activeSessions = data.sessions
+				.map(element => 'name' in JSON.parse(element.session) ? JSON.parse(element.session) : null)
+				.filter(element => element);
 			io.emit('updateUserList', {sessions: activeSessions});
 		});
 		

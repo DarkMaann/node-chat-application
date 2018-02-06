@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
 var multer = require('multer');
 var storage = multer.diskStorage({
 	destination: function(req, res, cb) {
@@ -81,9 +82,19 @@ router.post('/', upload.single('image'), function(req, res, next) {
 	// check if password entered for the second time matches with first one
 	if (req.body.password !== req.body.password2) {
 		req.session.msg = 'Passwords must match.';
-		res.redirect('./signin');
+		return res.redirect('./signin');
 	}
 	
+	// double-check if username matches regexp from client-side
+	let nameRegEx = /[A-Za-z][A-Za-z0-9\-_]{5,14}/;
+	let arrayRegEx = nameRegEx.exec(req.body.username);
+	if (arrayRegEx === null || arrayRegEx[0].length !== req.body.username.length) {
+		// delete image saved by multer because invalid user sign in
+		fs.unlink(`${process.cwd()}/public/images/${req.file.filename}`, err => err ? console.log(err) : console.log('Deleted stale image.'));
+		req.session.msg = 'Username did not match criteria. It must contain only alphanumeric characters and dashes';
+		return res.redirect('./signin');
+	};
+
 	let potentialUser = new userModel({
 		username: req.body.username,
 		password: req.body.password,
