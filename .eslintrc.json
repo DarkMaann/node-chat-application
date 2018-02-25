@@ -11,7 +11,7 @@
     },
     "rules": {
         "indent": [
-            "warn",
+            "off",
             "tab"
         ],
         "linebreak-style": [
@@ -20,7 +20,9 @@
         ],
         "semi": [
             "error",
-            "always"
+			"always", {
+				"omitLastInOneLineBlock": true
+			}
         ],
         "no-trailing-spaces":[
             "error", {

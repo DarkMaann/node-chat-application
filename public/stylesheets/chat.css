@@ -68,8 +68,9 @@ body {
 .msg {
   position: relative;
   min-width: auto;
-  max-width: 40%;
+  max-width: 80%;
   padding: 5px;
+  margin: 2px;
   clear: both;
   overflow-wrap: break-word;
   white-space: pre-wrap;
@@ -184,12 +185,24 @@ body {
 .singleChat .singleChatTopBar .minimizeBtn:hover {
   background-color: orange;
 }
+.singleChat .singleChatSpace {
+  border-style: solid;
+  border-width: 0;
+  border-color: black;
+  padding: 1%;
+  margin: 0px;
+  position: relative;
+  top: 15px;
+  height: 220px;
+  overflow-y: scroll;
+}
 .singleChat .singleMessageSpace {
   border-style: solid;
   border-width: 2px;
   border-color: black;
   padding: 2%;
   margin: 0px;
+  padding-bottom: 0;
   border-left: 0;
   border-right: 0;
   background-color: khaki;
@@ -256,6 +269,17 @@ body {
 .singleChatMinimized .singleChatTopBar:hover .singleChatLabel {
   color: #333333;
 }
+.singleChatMinimized .singleChatSpace {
+  border-style: solid;
+  border-width: 0;
+  border-color: black;
+  padding: 1%;
+  margin: 0px;
+  position: relative;
+  top: 15px;
+  height: 220px;
+  overflow-y: scroll;
+}
 .singleChatMinimized .singleMessageSpace {
   border-style: solid;
   border-width: 2px;
@@ -277,8 +301,9 @@ body {
 .msgLeft {
   position: relative;
   min-width: auto;
-  max-width: 40%;
+  max-width: 80%;
   padding: 5px;
+  margin: 2px;
   clear: both;
   overflow-wrap: break-word;
   white-space: pre-wrap;
@@ -291,14 +316,15 @@ body {
 .msgRight {
   position: relative;
   min-width: auto;
-  max-width: 40%;
+  max-width: 80%;
   padding: 5px;
+  margin: 2px;
   clear: both;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   float: right;
   text-align: justify;
-  background-color: #237738;
+  background-color: #3b9e54;
   color: white;
   border-radius: 10px;
 }

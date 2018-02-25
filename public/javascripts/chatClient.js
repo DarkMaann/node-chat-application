@@ -1,6 +1,6 @@
 var socket = require('socket.io-client')('http://192.168.8.101:4000'); // get the socket object and connect to server
 var creator = require('./createHtml'); // get the html creation library
-var mainDiv,chatSpace, messageSpace, usersSpace, btn, yourName;
+var mainDiv,chatSpace, messageSpace, usersSpace, btn, clientName;
 
 
 let actionTracker = {
@@ -16,10 +16,10 @@ let actionTracker = {
 	}
 };
 
-function writeMessage(data) {
-	let renderedMsg = (data.name == yourName ? 'You said' : data.name + ' said') + ':\n' + data.msg;
-	let leftOrRight = data.name == yourName ? 'msgRight' : 'msgLeft';
-	let newEl = creator.createHTML('p', chatSpace, renderedMsg);
+function writeMessage(data, writeLocation) {
+	let renderedMsg = (data.name == clientName ? 'You said' : data.name + ' said') + ':\n' + data.msg;
+	let leftOrRight = data.name == clientName ? 'msgRight' : 'msgLeft';
+	let newEl = creator.createHTML('p', writeLocation, renderedMsg);
 	creator.appendAttr(newEl, 'class', leftOrRight);
 }
 
@@ -31,42 +31,77 @@ window.onload = () => {
 	messageSpace = document.getElementById('messageSpace');
 	usersSpace = document.getElementById('usersDiv');
 	btn = document.getElementById('btn');
-	yourName = document.getElementById('yourName').innerHTML;
+	clientName = document.getElementById('clientName').innerHTML;
+	
+	messageSpace.focus();
 	
 	// emit this event to obtain active users
-	socket.emit('userPageRefreshed');
+	socket.emit('userPageRefreshed', {name: clientName});
 	// calculate max number of single chats
 	creator.singleChatMax = Math.floor(window.innerWidth / 240);
 	
 	// start listening for chat messages coming from socket server (serverMsg event) via broadcasting
-	socket.on('serverMsg', data => {
-		writeMessage(data);
+	socket.on('serverMsgGroup', data => {
+		writeMessage(data, chatSpace);
 		// set automatic scrolldown of the scrollbar
 		chatSpace.scrollTop = chatSpace.scrollHeight;
 	});
 
+	// start listening for chat messages coming from socket server but specifically to this user
+	socket.on('serverMsgSingle', data => {
+		let whereToWrite = data.name === clientName ? data.to : data.name;
+		let singleChat = document.getElementById(whereToWrite);
+		// ensure that single chat pops up if it isn't already open
+		if (!singleChat) {
+			creator.createSingleChat(usersSpace, whereToWrite, socket, clientName);
+			singleChat = document.getElementById(whereToWrite);
+		}
+		let singleChatSpace = singleChat.querySelector('div.singleChatSpace');
+		writeMessage(data, singleChatSpace);
+		singleChatSpace.scrollTop = singleChatSpace.scrollHeight;
+	});
+
 	// take action when this signal arrives from io-server and update chat history with given data
 	socket.on('updateChatHistory', dataArr => {
-		dataArr.forEach(element => writeMessage(element));
+		dataArr.forEach(element => writeMessage(element, chatSpace));
 		chatSpace.scrollTop = chatSpace.scrollHeight;
 	});
 
 	// take action when this signal arrives from io-server and update active users list with given data
 	socket.on('updateUserList', data => {
-		usersSpace.innerHTML = '';
+		//usersSpace.innerHTML = '';
+		let users = Array.from(document.getElementsByClassName('activeUsersName'));
+		// adds new users that don't exist on active users list
 		data.sessions.forEach(element => {
-			creator.populateActiveUser(element, usersSpace);
+			if (!users.some(item => element.name === item.innerHTML)) {
+				creator.populateActiveUser(element, usersSpace, socket, clientName);
+			}
+		});
+		// removes users that don't exist on newly arrived list (data.sessions) and removes them from active users list
+		users = Array.from(document.getElementsByClassName('activeUsersName'));
+		users.forEach(item => {
+			if (!data.sessions.some(element => item.innerHTML === element.name)) {
+				item.parentNode.remove();
+				let chatToDelete = document.getElementById(item.innerHTML);
+				if (chatToDelete) chatToDelete.remove();
+				self.singleChatNumber = 0;
+				Array
+				.from(document.getElementsByClassName('singleChatTopBar'))
+				.forEach(element => element.parentNode.style.left = 240 * self.singleChatNumber++ + 'px');
+			}
 		});
 	});
 
 	// start listening for enter keypress
 	document.addEventListener('keydown', event => {
-		// emit clientMsg event and send chat message to socket server if enter was pressed and message box isn't empty 
-		if (event.key == 'Enter' && messageSpace.value != ''){
-			socket.emit('clientMsg', {name: yourName, msg: messageSpace.value});
-			messageSpace.value = '';
+		// emit clientMsg event and send chat message to socket server if enter was pressed and message box isn't empty
+		if (messageSpace === document.activeElement) {
+			if (event.key == 'Enter' && messageSpace.value != ''){
+				socket.emit('clientMsgGroup', {name: clientName, msg: messageSpace.value});
+				messageSpace.value = '';
+			}
+			actionTracker.isActive = true;
 		}
-		actionTracker.isActive = true;
 	});
 
 	// set the variable for maximum number of single chats when the screen is resized

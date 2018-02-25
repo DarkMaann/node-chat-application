@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://192.168.8.101:4000');
+var socket = require('socket.io-client')('http://192.168.8.101:4000/childSpawner');
 var {fork} = require('child_process');
 
 function forkActiveSessionsGetter(processUrl) {

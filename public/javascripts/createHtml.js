@@ -25,7 +25,7 @@ var library = {
 	},
 
 	// dynamically create active-users list with classes and effects form chat.css file
-	populateActiveUser(user, parentElem) {
+		populateActiveUser(user, parentElem, socket, hostName) {
 		let self = this;
 		let newDiv = this.createHTML('div', parentElem, '');
 		this.appendAttr(newDiv, 'class', 'users');
@@ -48,12 +48,12 @@ var library = {
 						return;
 					};
 				});
-			if (!alreadyOpen) self.createSingleChat(parentElem, user.name);
+			if (!alreadyOpen) self.createSingleChat(parentElem, user.name, socket, hostName);
 		});
 	},
 
 	// dynamically create single chat with classes from chat.css file
-	createSingleChat(mainDiv, talkToPerson) {
+	createSingleChat(mainDiv, talkToPerson, socket, hostName) {
 		let self = this;
 		let singleChatList = document.getElementsByClassName('singleChatTopBar');
 		// start from beginning when whole window width is filled with chats
@@ -61,6 +61,7 @@ var library = {
 		// boilerplate for single chat
 		let replaceableElem = this.singleChatNumber in singleChatList ? singleChatList[this.singleChatNumber].parentNode : null;
 		let singleChat = this.createHTML('div', mainDiv, '', replaceableElem);
+		this.appendAttr(singleChat, 'id', talkToPerson);
 		this.appendAttr(singleChat, 'class', 'singleChat');
 		this.appendAttr(singleChat, 'style', 'left:' + 240 * this.singleChatNumber++ + 'px');
 		let singleChatTopBar = this.createHTML('div', singleChat, '');
@@ -88,8 +89,18 @@ var library = {
 				.forEach(element => element.parentNode.style.left = 240 * self.singleChatNumber++ + 'px');
 		});
 		closeBtn.src = '/images/close_window.png';
+		let singleChatSpace = this.createHTML('div', singleChat, '');
+		this.appendAttr(singleChatSpace, 'class', 'singleChatSpace');
 		let singleMessageSpace = this.createHTML('input', singleChat, '');
 		this.appendAttr(singleMessageSpace, 'class', 'singleMessageSpace');
+		singleMessageSpace.focus();
+		// add listener for pressing enter, i.e. sending single message to certain user
+		singleMessageSpace.addEventListener('keydown', function(ev) {
+			if (ev.key === 'Enter' && this.value !== '') {
+				socket.emit('clientMsgSingle', {name: hostName, to: talkToPerson, msg: this.value});
+				this.value = '';
+			}
+		});
 		singleMessageSpace.type = 'text';
 		singleMessageSpace.placeholder = 'Say something...';
 		singleMessageSpace.name = 'singleMessageSpace';
