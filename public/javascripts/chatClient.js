@@ -69,10 +69,10 @@ window.onload = () => {
 
 	// take action when this signal arrives from io-server and update active users list with given data
 	socket.on('updateUserList', data => {
-		//usersSpace.innerHTML = '';
 		let users = Array.from(document.getElementsByClassName('activeUsersName'));
 		// adds new users that don't exist on active users list
-		data.sessions.forEach(element => {
+		data.sessions.forEach(elementString => {
+			let element = JSON.parse(elementString);
 			if (!users.some(item => element.name === item.innerHTML)) {
 				creator.populateActiveUser(element, usersSpace, socket, clientName);
 			}
@@ -80,7 +80,7 @@ window.onload = () => {
 		// removes users that don't exist on newly arrived list (data.sessions) and removes them from active users list
 		users = Array.from(document.getElementsByClassName('activeUsersName'));
 		users.forEach(item => {
-			if (!data.sessions.some(element => item.innerHTML === element.name)) {
+			if (!data.sessions.some(elementString => item.innerHTML === JSON.parse(elementString).name)) {
 				item.parentNode.remove();
 				let chatToDelete = document.getElementById(item.innerHTML);
 				if (chatToDelete) chatToDelete.remove();

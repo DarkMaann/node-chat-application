@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "mongo": "mongo-express -a -u admin -p pass",
+	"mongo": "mongo-express -a -u admin -p pass",
+	"redis": "(sleep 2; sudo chown darko ~/.redis/redis.sock)& sudo redis-server ~/.redis/redis.conf",
     "wp": "webpack",
     "predebug": "for file in ./public/stylesheets/*.less; do lessc $file `echo $file | sed -e 's/less/css/'`; done",
     "debug": "webpack -w & nodemon --inspect ./bin/www",
@@ -23,6 +24,7 @@
     "mongoose": "^4.13.11",
     "morgan": "~1.8.1",
     "multer": "^1.3.0",
+    "redis": "^2.8.0",
     "serve-favicon": "~2.4.2",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4"
