@@ -104,6 +104,7 @@ var library = {
 		singleMessageSpace.type = 'text';
 		singleMessageSpace.placeholder = 'Say something...';
 		singleMessageSpace.name = 'singleMessageSpace';
+		socket.emit('giveSingleChatHistory', {from: hostName, to: talkToPerson});
 	}
 
 };

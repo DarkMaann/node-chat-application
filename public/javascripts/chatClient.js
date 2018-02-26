@@ -67,6 +67,14 @@ window.onload = () => {
 		chatSpace.scrollTop = chatSpace.scrollHeight;
 	});
 
+	// update single chat History for a specific user, if chat is open
+	socket.on('updateSingleChatHistory', data => {
+		let singleChatSpace = document.getElementById(data.name).querySelector('div.singleChatSpace');
+		if (singleChatSpace) {
+			data.chat.forEach(item => writeMessage(JSON.parse(item), singleChatSpace));
+		}
+	});
+
 	// take action when this signal arrives from io-server and update active users list with given data
 	socket.on('updateUserList', data => {
 		let users = Array.from(document.getElementsByClassName('activeUsersName'));

@@ -5,8 +5,6 @@ client.on('error', err => console.log(`Error in redis: ${err}`));
 
 // this variable will hold latest array of active users, for users who only refresh their page
 var activeSessions = [];
-// this variable will hold objects of user names and their socket IDs, for io server to send specificaly when needed
-var socketIdList = {};
 // this variable will hold array of msg objects, i.e. chat history to serve to clients on page refresh
 var chatHistory = [];
 
@@ -29,8 +27,7 @@ function ioHandler(io, store) {
 		
 		// listen for local socket from childSpawner and act when you receive chat history
 		socket.on('gotChatHistory', data => {
-			//chatHistory = data;
-			
+			chatHistory = data;
 			socket.broadcast.emit('updateChatHistory', data);
 		});
 
@@ -51,11 +48,15 @@ function ioHandler(io, store) {
 		socket.on('clientMsgSingle', data => {
 			let sender = data.name;
 			let receiver = data.to;
+			// save single chat history
+			client.rpush(`${sender}-${receiver}`, JSON.stringify({name: sender, msg: data.msg}));
+			// send according to socket hash table to sender
 			client.hget('socketHash', data.name, (err, id) => io.to(id).emit('serverMsgSingle', {name: sender, to: receiver, msg: data.msg}));
-			//io.to(socketIdList[sender]).emit('serverMsgSingle', {name: sender, to: receiver, msg: data.msg});
 			if (sender === receiver) return;
+			// save single chat history if it isn't self sent message
+			client.rpush(`${receiver}-${sender}`, JSON.stringify({name: sender, msg: data.msg}));
+			// send to receiver if it isn't self sent message
 			client.hget('socketHash', data.to, (err, id) => io.to(id).emit('serverMsgSingle', {name: sender, to: receiver, msg: data.msg}));
-			//io.to(socketIdList[receiver]).emit('serverMsgSingle', {name: sender, to: receiver, msg: data.msg});
 		});
 
 		// listen for client log in or out and send signal to childSpawner to 
@@ -70,13 +71,21 @@ function ioHandler(io, store) {
 			//socketIdList[data.name] = socket.id;
 			client.hmset('socketHash', data.name, socket.id);
 			client.lrange('sessionList', '0', '-1', function(err, list) {
+				if (err) return console.log(err);
 				socket.emit('updateUserList', {
 					sessions: list
 				});
 			});
 			socket.emit('updateChatHistory', chatHistory);
 		});
-		
+
+		// send single chat history when requested by specific for specific user
+		socket.on('giveSingleChatHistory', data => {
+			client.lrange(`${data.from}-${data.to}`, '0', '-1', (err, list) => {
+				if (err) return console.log(err);
+				socket.emit('updateSingleChatHistory', {name: data.to, chat: list});
+			});
+		});
 	});
 
 };
