@@ -48,11 +48,42 @@ body {
   display: flex;
   flex-direction: column;
   flex-basis: 50%;
-  max-width: 50%;
+  max-width: 40%;
+  height: 80%;
   background-color: royalblue;
   border-right-width: 0;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+}
+#chatDiv .smileySpace {
+  border-style: solid;
+  border-width: 0;
+  border-color: black;
+  padding: 2%;
+  margin: 1%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  align-self: flex-end;
+  padding-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background-color: royalblue;
+  color: white;
+  width: 10px;
+  height: 5px;
+}
+#chatDiv .smileySpace span {
+  float: right;
+}
+#chatDiv .smileySpace span:hover {
+  color: khaki;
+}
+#chatDiv .smileySpace span.arrow:hover {
+  color: orange;
 }
 #chatSpace {
   border-style: solid;
@@ -83,6 +114,7 @@ body {
   margin: 0px;
   border-top-width: 0;
   background-color: khaki;
+  width: 98.2%;
   text-align: right;
 }
 #usersDiv {
@@ -94,6 +126,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-basis: 10%;
+  height: 81.7%;
   border-left-width: 0;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -210,8 +243,40 @@ body {
   bottom: 0;
   left: 0;
   height: 5%;
-  width: 96%;
+  width: 87%;
   text-align: right;
+}
+.singleChat .smileySpace {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 2%;
+  margin: 0px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-top: 0;
+  border-left: 0;
+  border-right: 0;
+  background-color: darkkhaki;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 5%;
+  width: 6%;
+}
+.singleChat .smileySpace span:hover {
+  color: blue;
+}
+.singleChat .smileySpace span.arrow {
+  position: absolute;
+  right: 0;
+}
+.singleChat .smileySpace span.arrow:hover {
+  color: yellow;
 }
 .singleChatMinimized {
   border-style: solid;
@@ -297,6 +362,22 @@ body {
   text-align: right;
   display: none;
 }
+.singleChatMinimized .smileySpace {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 2%;
+  margin: 0px;
+  padding-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  background-color: teal;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 5%;
+  width: 5%;
+}
 /******************************** mixins ********************************/
 .msgLeft {
   position: relative;
@@ -327,6 +408,14 @@ body {
   background-color: #3b9e54;
   color: white;
   border-radius: 10px;
+}
+.disableSelectText {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 @keyframes lightUp {
   from {

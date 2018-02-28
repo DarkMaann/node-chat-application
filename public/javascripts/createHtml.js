@@ -11,8 +11,7 @@ var library = {
 	createHTML(newElem, parentElem, txt, replaceableElem) {
 		let newElemCreated = document.createElement(newElem);
 		if (txt) {
-			let txtNode = document.createTextNode(txt);
-			newElemCreated.appendChild(txtNode);
+			newElemCreated.appendChild(document.createTextNode(txt));
 		}
 		if (replaceableElem) parentElem.replaceChild(newElemCreated, replaceableElem);
 		else parentElem.appendChild(newElemCreated);
@@ -104,9 +103,43 @@ var library = {
 		singleMessageSpace.type = 'text';
 		singleMessageSpace.placeholder = 'Say something...';
 		singleMessageSpace.name = 'singleMessageSpace';
+		let smileySpace = this.createHTML('div', singleChat, '');
+		this.enableSmileys(singleMessageSpace, smileySpace);
 		socket.emit('giveSingleChatHistory', {from: hostName, to: talkToPerson});
-	}
+	},
 
+	enableSmileys(messageSpace, smileySpace, width = '6%') {
+		smileySpace.innerHTML = '<span>\u{1f600}</span>';
+		smileySpace.addEventListener('click', function openey(evt) {
+			this.style.width = '96%';
+			this.textContent = '';
+			this.innerHTML = `<span>\u{1f600}</span>
+							  <span>\u{1f602}</span>
+							  <span>\u{1f609}</span>
+							  <span>\u{1f60A}</span>
+							  <span>\u{1f610}</span>
+							  <span>\u{1f62B}</span>
+							  <span>\u{1f615}</span>
+							  <span>\u{1f614}</span>
+							  <span>\u{1f61E}</span>
+							  <span>\u{1f631}</span>
+							  <span class='arrow'>\u{27A1}</span>`;
+			let spanArray = [...this.querySelectorAll('span')];
+			spanArray.forEach(item => {
+				item.addEventListener('click', function closey(evt) {
+					evt.stopPropagation();
+					if (item.textContent !== '\u{27A1}') messageSpace.value += item.textContent;
+					smileySpace.style.width = width;
+					smileySpace.innerHTML = '\u{1f600}';
+					spanArray.forEach(item => item.removeEventListener('click', closey));
+					smileySpace.addEventListener('click', openey);
+					messageSpace.focus();
+				});
+			});
+			smileySpace.removeEventListener('click', openey);
+		});
+		this.appendAttr(smileySpace, 'class', 'smileySpace');
+	}
 };
 
 

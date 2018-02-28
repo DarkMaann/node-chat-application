@@ -43,11 +43,33 @@ body {
 	display: flex;
 	flex-direction: column;
 	flex-basis: 50%;
-	max-width: 50%;
+	max-width: 40%;
+	height: 80%;
 	background-color: royalblue;
 	border-right-width: 0;
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
+	.smileySpace {
+		.box(@width:0;@margin:1%;@padding:2%);
+		.disableSelectText();
+		align-self: flex-end;
+		padding-top: 0;
+		border-left: 0;
+		border-right: 0;
+		background-color: royalblue;
+		color: white;
+		width: 10px;
+		height: 5px;
+		span {
+			float: right;
+		}
+		span:hover {
+			color: khaki;
+		}
+		span.arrow:hover {
+			color: orange;
+		}
+	}
 }
 
 #chatSpace {
@@ -55,7 +77,7 @@ body {
 	flex-grow: 1;
     background-color: white;
     overflow-x: hidden;
-    overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 .msg {
@@ -73,7 +95,8 @@ body {
 	.box();
 	border-top-width: 0;
     background-color: khaki;
-    text-align: right;
+	width: 98.2%;
+	text-align: right;
 }
 
 #usersDiv {
@@ -81,6 +104,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	flex-basis:10%;
+	height: 81.7%;
 	border-left-width: 0;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
@@ -179,8 +203,31 @@ body {
 		bottom: 0;
 		left: 0;
 		height: 5%;
-		width: 96%;
+		width: 87%;
 		text-align: right;
+	}
+	.smileySpace {
+		.box(@padding:2%);
+		.disableSelectText();
+		padding-top: 0;
+		border-left: 0;
+		border-right: 0;
+		background-color: darkkhaki;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		height: 5%;
+		width: 6%;
+		span:hover {
+			color: blue;
+		}
+		span.arrow {
+			position: absolute;
+			right: 0;		
+		}
+		span.arrow:hover {
+			color: yellow;
+		}
 	}
 }
 
@@ -250,6 +297,18 @@ body {
 		text-align: right;
 		display: none;
 	}
+	.smileySpace {
+		.box(@padding:2%);
+		padding-bottom: 0;
+		border-left: 0;
+		border-right: 0;
+		background-color: teal;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		height: 5%;
+		width: 5%;
+	}
 }
 /******************************** mixins ********************************/
 
@@ -284,6 +343,15 @@ body {
 	height: @height;
 	border: 2px double black;
 	border-radius: 10px;
+}
+
+.disableSelectText {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 @keyframes lightUp {

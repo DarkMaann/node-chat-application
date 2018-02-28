@@ -1,6 +1,6 @@
 var socket = require('socket.io-client')('http://192.168.8.101:4000'); // get the socket object and connect to server
 var creator = require('./createHtml'); // get the html creation library
-var mainDiv,chatSpace, messageSpace, usersSpace, btn, clientName;
+var mainDiv, chatDiv, chatSpace, messageSpace, smileySpace, usersSpace, btn, clientName;
 
 
 let actionTracker = {
@@ -27,11 +27,14 @@ function writeMessage(data, writeLocation) {
 window.onload = () => {
 	
 	mainDiv = document.getElementById('main');
+	chatDiv = document.getElementById('chatDiv');
 	chatSpace = document.getElementById('chatSpace');
 	messageSpace = document.getElementById('messageSpace');
+	smileySpace = chatDiv.querySelector('div.smileySpace');
 	usersSpace = document.getElementById('usersDiv');
 	btn = document.getElementById('btn');
 	clientName = document.getElementById('clientName').innerHTML;
+	creator.enableSmileys(messageSpace, smileySpace, '10px');
 	
 	messageSpace.focus();
 	
@@ -72,6 +75,7 @@ window.onload = () => {
 		let singleChatSpace = document.getElementById(data.name).querySelector('div.singleChatSpace');
 		if (singleChatSpace) {
 			data.chat.forEach(item => writeMessage(JSON.parse(item), singleChatSpace));
+			singleChatSpace.scrollTop = singleChatSpace.scrollHeight;
 		}
 	});
 
