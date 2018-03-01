@@ -68,7 +68,6 @@ function ioHandler(io, store) {
 
 		// send list of active sessions only to the user who refreshed page
 		socket.on('userPageRefreshed', data => {
-			//socketIdList[data.name] = socket.id;
 			client.hmset('socketHash', data.name, socket.id);
 			client.lrange('sessionList', '0', '-1', function(err, list) {
 				if (err) return console.log(err);

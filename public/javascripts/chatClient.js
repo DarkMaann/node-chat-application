@@ -17,7 +17,7 @@ let actionTracker = {
 };
 
 function writeMessage(data, writeLocation) {
-	let renderedMsg = (data.name == clientName ? 'You said' : data.name + ' said') + ':\n' + data.msg;
+	let renderedMsg = '<span class="userName">' + (data.name == clientName ? 'You' : data.name) + '</span>\n' + data.msg;
 	let leftOrRight = data.name == clientName ? 'msgRight' : 'msgLeft';
 	let newEl = creator.createHTML('p', writeLocation, renderedMsg);
 	creator.appendAttr(newEl, 'class', leftOrRight);

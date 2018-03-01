@@ -11,7 +11,8 @@ var library = {
 	createHTML(newElem, parentElem, txt, replaceableElem) {
 		let newElemCreated = document.createElement(newElem);
 		if (txt) {
-			newElemCreated.appendChild(document.createTextNode(txt));
+			//newElemCreated.appendChild(document.createTextNode(txt));
+			newElemCreated.innerHTML = txt;
 		}
 		if (replaceableElem) parentElem.replaceChild(newElemCreated, replaceableElem);
 		else parentElem.appendChild(newElemCreated);
