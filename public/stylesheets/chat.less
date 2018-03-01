@@ -3,11 +3,12 @@ body {
 	padding: 0;
     height: 98%;
     width: 98%;
-	background-color: rgb(202, 200, 200);
+	background-color: rgb(23, 230, 212);
 	font-family: Arial, Helvetica, sans-serif;
 	background-image: url(../images/wall.jpg);
+	background-repeat: no-repeat;
 	background-position: left top;
-	background-size: cover;
+	//background-size: 100%;
 }
 //--------------------------------header--------------------------------//
 #header {
@@ -40,6 +41,12 @@ body {
 
 #profilePic {
 	.picture(100px; 100px;);
+}
+
+#logoDiv {
+	position: fixed;
+	top: 20%;
+	left: 15%;
 }
 
 #chatDiv {
@@ -110,11 +117,11 @@ body {
 }
 
 #usersDiv {
-	.box(2px;0px);
+	.box();
 	display: flex;
 	flex-direction: column;
 	flex-basis:10%;
-	height: 81.7%;
+	height: 80%;
 	border-left-width: 0;
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
