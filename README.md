@@ -10,10 +10,7 @@ The application supports creating user accounts, group chat and also single user
 
 ![login](/screenshoots/login.png)
 
-*login*
-
 ![signin](/screenshoots/signin.png)
-*signin*
 
 This project was made just for fun and little bit of practice. Feel free to use it for your own need.
 
