@@ -8,7 +8,7 @@ This is small but full featured chat application. Written in vanilla.js for fron
 The application supports creating user accounts, group chat and also single user-to-user messaging.
 
 
-![login](/screenshoots/login.png)
+______________________![login](/screenshoots/login.png)
 
 ![signin](/screenshoots/signin.png)
 
