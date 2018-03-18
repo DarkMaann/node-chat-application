@@ -1,6 +1,6 @@
 # Node-chat-application
 
-This is small but full featured chat application. Written in vanilla.js for frontend, and node.js for backend. MongoDB and Redis are used for various data storage. Standard express framework scheme has been used. Sessions are implemented via cookies, with basic auth protocol for authentication.
+This is small but full featured chat application. Written in vanilla.js for frontend, and node.js for backend. MongoDB and Redis are used for various data storage. Standard express framework scheme has been used. Sessions are implemented via cookies, with express-sessions.
 
 ![chatApp - main page](/screenshoots/chatApp.png)
 *main page*
