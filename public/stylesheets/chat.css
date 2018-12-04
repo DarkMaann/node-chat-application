@@ -404,7 +404,7 @@ body {
   overflow-wrap: break-word;
   white-space: pre-wrap;
   float: left;
-  text-align: justify;
+  text-align: left;
   background-color: #d86262;
   color: white;
   border-radius: 10px;
@@ -419,7 +419,7 @@ body {
   overflow-wrap: break-word;
   white-space: pre-wrap;
   float: right;
-  text-align: justify;
+  text-align: left;
   background-color: #3b9e54;
   color: white;
   border-radius: 10px;

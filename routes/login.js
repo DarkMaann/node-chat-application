@@ -5,7 +5,7 @@ var multer = require('multer');
 var storage = multer.diskStorage({
 	destination: function(req, res, cb) {
 		cb(null, `${process.cwd()}/public/images`);
-	},
+	}
 });
 var upload = multer({storage: storage});
 var mongoose = require('mongoose');
@@ -25,7 +25,7 @@ mongoose.connect(connStr, {useMongoClient: true}, function(err) {
 
 
 
-// handle the post request to /login (from ./ ) and handle user login
+// handle the get request to /login (from ./ ) and handle user login
 router.get('/', function(req, res, next) {
 
 	// check if user is accessing this page through homePage or manually, and if he/she has entered credentials

@@ -22,7 +22,7 @@ window.onload = () => {
 		
 		// use File API to load a file (pic) from given url and attach an onload listener to display it in img element
 		let reader = new FileReader();
-		reader.onload = ((aImg) => {return (e) => {aImg.src = e.target.result;}; })(img);
+		reader.onload = ((aImg) => {return (e) => {aImg.src = e.target.result} })(img);
 		reader.readAsDataURL(files[0]);
 	});
 
